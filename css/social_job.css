@@ -1,0 +1,242 @@
+html{
+	margin: 0 auto;
+	
+	
+}
+
+body{
+	margin: 0 auto;
+	overflow-x: hidden;
+}
+#banner{
+	width: 100%;
+	height: 60px;
+	background-color: #22f5ee;
+	position: absolute;
+	top: 0px;
+}
+
+#book_png_1{
+	width: 40px;
+	height: 48px;
+	height: auto;
+	position: absolute;
+	left:210%;
+	display: inline-block;
+	cursor: pointer;
+}
+#sign_or_register{
+	top: 60px;
+	z-index: 1;
+	position: absolute;
+	left:210%;
+	background-color: red;
+	display: inline-block;
+}
+#liebiao{
+	list-style: none;
+}
+
+#banner_ul{
+  position: absolute;
+  left: 0px;
+  width: 600px;
+  height:60px ;
+  line-height: 60px;
+}
+
+#liebiao li{
+	float: left;
+	margin: auto 30px;
+	l
+}
+
+#liebiao:last-child{
+	position: absolute;
+	
+}
+
+#liebiao li a{
+	text-decoration: none;
+	color: white;
+}
+
+#submit_msg{
+	width: 1100px;
+    height: 200px;
+    background-color: #eceeee;
+    position: relative;
+    top: 100px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+#fileInputContainer{
+        height:28px;
+        background:url(../img/添加图片投票.png)no-repeat;
+        position:absolute;
+        left: 850px;
+        top: 150px;
+        width: 34px;
+         cursor: pointer;
+    }
+    #fileInput{
+    	display: none;
+        height:28px;
+        position:absolute;
+        width: 34px;
+        right:0;
+        top:0;
+        opacity: 0;
+        filter:alpha(opacity=0);
+    }
+
+#submit_msg p{
+	position: absolute;
+	left: 200px;
+	top: 10px;
+}
+#jiayou_img{
+	background: url(../img/jiayou.png)no-repeat center;
+	width: 234px;
+	height: 36px;
+	position: absolute;
+	top: 2px;
+	left: 200px;
+}
+
+#user-sended-msg{
+	width: 1100px;
+	height: 366px;
+	background-color: #eceeee;
+	position: relative;
+	top: 120px;
+	margin: 0 auto;
+	padding-left: 50px;
+}
+
+#personal_img{
+	background: url(../img/touxiang1.jpeg);
+	width: 120px;
+	height: 120px;
+	border-radius: 100%;
+	background-color: white;
+	position: absolute;
+	left: 40px;
+	top:40px ;
+}
+
+#write_msg{
+	resize: none;
+	width: 770px;
+	height: 100px;
+	position: absolute;
+	left: 200px;
+	top: 40px;
+}
+
+#sed_message{
+	background: url(../img/发送.png);
+	width: 34px;
+	height: 29px;
+	position: absolute;
+	border-radius: 20%;
+	left: 930px;
+	top: 150px;
+}
+
+#sed_button{
+	    height:29px;
+	    width: 34px;
+        position:absolute;
+        right:0;
+        top:0;
+        opacity: 0;
+        filter:alpha(opacity=0);
+        cursor:pointer;
+}
+
+#count{
+	position: absolute;
+	width: 200px;
+	height: 30px;
+	left: 810px;
+	top: 8px;
+}
+
+#signin{
+	border-radius:10px 10px 10px 10px/10px 10px 10px 10px;
+	width: 500px;
+	height: 200px;
+	position: absolute;
+	background-color: #e2e4e3;
+	box-shadow: 0 0 4px black;
+	z-index: -1;
+	opacity: 0;
+	transition: all 0.1s ease;
+	border: none;
+	
+}
+#email{
+	position: absolute;
+	left: 69px;
+	top: 40px;
+	line-height: 38px;
+}
+#typeemail{
+	position: absolute;
+	width: 300px;
+	height: 38px;
+	left: 115px;
+	top: 40px;
+}
+#password{
+	position: absolute;
+	line-height: 38px;
+	left:69px ;
+	top: 100px;
+}
+#typepassword{
+	height: 38px;
+	width: 300px;
+	position: absolute;
+	left:115px ;
+	top: 100px;
+}
+#sign_later{
+	position: absolute;
+	width: 60px;
+	height: 30px;
+	line-height: 16px;
+	left:350px ;
+	top: 150px;
+}
+
+#submit_load{
+	position: absolute;
+	width: 60px;
+	height: 30px;
+	line-height: 16px;
+	left:180px ;
+	top: 150px;
+}
+#sign_in{
+	position: absolute;
+	width: 60px;
+	height: 30px;
+	line-height: 16px;
+	left:265px ;
+	top: 150px;
+}
+#bg{
+	background: url(../img/毛玻璃.jpg)no-repeat cover;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background-color: #989898;
+	z-index: -1;
+	opacity: 0;
+	/*transition: all 0.1s ease;*/
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>my socially job</title>
+		<link rel="stylesheet" type="text/css" href="bootstrap-3.3.5-dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/social_job.css" />
+		<script src="js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/social_job.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="banner">
+			<div id="banner_ul">
+				<ul id="liebiao">
+					<li><a href="#"><b>首页</b></a></li>
+					<li><a href="#">技能学习</a></li>
+					<li><a href="#">职场经验</a></li>
+					<li><a href="#">面筋</a></li>
+				</ul>
+				<img id="book_png_1" src="img/book.png" title="" />
+			</div>
+		</div>
+
+		<div id="submit_msg">
+			<div id="count"><font face="微软雅黑" font size="4"><span id="out_word"></span><span id="num">200</spn><span id="num_af">个字符</span></font></div>
+			<div id="jiayou_img">
+
+			</div>
+
+			<textarea id="write_msg" name="write_msg" class="input" rows="" cols=""></textarea>
+			<div id="fileInputContainer" title="添加图片" onclick="fileSelect()">
+				<input id="fileInput" type="file" name="" title="添加图片" />
+			</div>
+			<div id="sed_message">
+				<input id="sed_button" type="button" name="" title="发送" />
+			</div>
+			<div id="personal_img">
+			</div>
+		</div>
+
+		<div id="user-sended-msg">
+
+		</div>
+
+		<!--
+        	作者：huangtao
+        	时间：2015-11-11
+        	描述：登陆页
+        -->
+       <div id="bg">
+       </div>
+		<div id="signin">
+			<p id="email"><font face="微软雅黑" font size=4>邮箱</font></p>
+			<input id="typeemail" type="text" />
+			<p id="password"><font face="微软雅黑" font size=4>密码</font></p>
+			<input id="typepassword" type="text" />
+			<button class="btn btn-success" id="submit_load"><font face="微软雅黑">登陆</font></button>
+			<button class="btn btn-danger" id="sign_in"><font face="微软雅黑">注册</font></button>
+			<button class="btn btn-warning" id="sign_later"><font face="微软雅黑">逛一下</font></button>
+		</div>
+	</body>
+
+</html>
