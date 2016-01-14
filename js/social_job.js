@@ -518,7 +518,7 @@ function set_sig_reg() {
 			}
 			return sig=false;
 		}
-		//逛一下功能按钮
+	
 	sign_later.onclick = function() {
 		if (sig== false) {
 			signin_box.style.zIndex = -1;
@@ -537,7 +537,7 @@ function set_sig_reg() {
 	}
 }
 
-//禁用ctrl+滚轮键放大图片
+
 function disabled_wheel() {
 	var scrollFunc = function(e) {
 		e = e || window.event;
@@ -557,7 +557,6 @@ function disabled_wheel() {
 window.onload = function() {
 	//用户提交信息呈现
 	sed_personal_div()
-		//禁用ctrl+滚轮键放大图片
 	disabled_wheel();
 	//设置信息区域的功能
 	set_write_msg();
