@@ -1,13 +1,3 @@
-//图片上传
-function fileSelect() {
-	document.getElementById("fileInput").click();
-}
-// 文件选择后触发次函数
-
-function fileSelected() {
-
-}
-
 function sed_personal_div() {
 	//页面登陆或者登陆从数据库中加载数据
 function getData () {
