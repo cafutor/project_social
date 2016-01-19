@@ -509,7 +509,7 @@ function set_sig_reg() {
 			return sig=false;
 		}
 	
-	sign_later.onclick = function() {
+	/*sign_later.onclick = */function setSign_later() {
 		if (sig== false) {
 			signin_box.style.zIndex = -1;
 			signin_box.style.opacity = 0;
@@ -524,6 +524,13 @@ function set_sig_reg() {
 			}
 		}
 		return sig=true;
+	}
+	if(document.addEventListener){
+		sign_later.addEventListener("click",setSign_later,false);
+	}else if(window.attachEvent){
+		sign_later.attachEvent("onclick",setSign_later)
+	}else{
+		sign_later.onclick=setSign_later;
 	}
 }
 
@@ -546,7 +553,8 @@ function disabled_wheel() {
 };
 window.onload = function() {
 	//用户提交信息呈现
-	sed_personal_div()
+	sed_personal_div();
+	//***************
 	disabled_wheel();
 	//设置信息区域的功能
 	set_write_msg();
