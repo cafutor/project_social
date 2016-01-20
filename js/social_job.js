@@ -545,7 +545,6 @@ function set_sig_reg() {
 				console.log("submit suecess");
 			}
 		})
-		console.log("nimei");
 	}
 var regbtn=document.getElementById("sign_in");
 if(document.addEventListener){
