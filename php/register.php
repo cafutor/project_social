@@ -39,7 +39,7 @@ $mail->addAddress($email);               // Name is optional
 $mail->isHTML(true);                                  // Set email format to HTML
 
 $mail->Subject = '注册激活';
-$mail->Body    = '<b>离激活还差一部</b><a href="http://127.0.0.1:8081/social_job/php/active.php?confirm='.$token.'">http://127.0.0.1:8081/social_job/php/active.php?confirm='.$token.'</a>';
+$mail->Body    = '<b>离激活还差一步</b><a href="http://127.0.0.1:8081/social_job/php/active.php?confirm='.$token.'">http://127.0.0.1:8081/social_job/php/active.php?confirm='.$token.'</a>';
 $mail->AltBody = 'haha';
 
 if(!$mail->send()) {
