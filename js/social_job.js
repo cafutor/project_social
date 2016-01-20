@@ -1,5 +1,5 @@
 function sed_personal_div() {
-	//页面登陆或者登陆从数据库中加载数据
+	//页面登陆*者登陆从数据库中加载数据
 function getData () {
 	$.ajax({
 		type:"post",
@@ -417,7 +417,6 @@ function setClick () {
 		}
 		//点击按钮用户所发送信息的呈现区域height就增加
 		user_msg_sended.style.height = 20 * (arraydiv.length+ 1)+ arraydiv.length * 146 + 200 + 'px';
-		console.log(user_msg_sended.offsetHeight);
 		for (var j = 0; j < arraydiv.length; j++) {
 			arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 'px';
 		}
@@ -476,7 +475,6 @@ function set_write_msg() {
 
 	}
 }
-
 //登陆和注册||设置背景页透明效果
 function set_sig_reg() {
 	var window_width = window.innerWidth;
@@ -508,8 +506,8 @@ function set_sig_reg() {
 			}
 			return sig=false;
 		}
-	
-	/*sign_later.onclick = */function setSign_later() {
+		//逛一下功能按钮
+	function setSign_later() {
 		if (sig== false) {
 			signin_box.style.zIndex = -1;
 			signin_box.style.opacity = 0;
@@ -532,9 +530,36 @@ function set_sig_reg() {
 	}else{
 		sign_later.onclick=setSign_later;
 	}
+	//注册
+	function setreg () {
+	function getval () {
+		var pasword=document.getElementById("typepassword").value;
+		var email=document.getElementById("typeemail").value;
+		$.ajax({
+			type:"post",
+			url:"php/register.php",
+			async:true,
+			data:{"userpassword":pasword,"useremail":email},
+			dataType:"html",
+			success:function(){
+				console.log("submit suecess");
+			}
+		})
+		console.log("nimei");
+	}
+var regbtn=document.getElementById("sign_in");
+if(document.addEventListener){
+	regbtn.addEventListener("click",getval ,false);
+}else if(window.attachEvent){
+	regbtn.attachEvent("onclick",getval );
+}else{
+	regbtn.onclick=getval ;
+}
+}
+	setreg ();
 }
 
-
+//禁用ctrl+滚轮键放大图片
 function disabled_wheel() {
 	var scrollFunc = function(e) {
 		e = e || window.event;
@@ -544,17 +569,16 @@ function disabled_wheel() {
 			event.returnValue = false;
 		}
 	}
-
 	/*注册事件*/
 	if (document.addEventListener) {
 		document.addEventListener('DOMMouseScroll', scrollFunc, false);
-	} //W3C 
+	} 
 	window.onmousewheel = document.onmousewheel = scrollFunc; //IE/Opera/Chrome/Safari 
 };
 window.onload = function() {
 	//用户提交信息呈现
-	sed_personal_div();
-	//***************
+	sed_personal_div()
+	//*************
 	disabled_wheel();
 	//设置信息区域的功能
 	set_write_msg();
