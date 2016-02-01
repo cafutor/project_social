@@ -480,8 +480,6 @@ function set_sig_reg() {
 	var window_width = window.innerWidth;
 	var window_height = window.innerHeight;
 	var signin_box = document.getElementById('signin');
-	var signin_box_width = signin_box.offsetWidth;
-	var signin_box_height = signin_box.offsetHeight;
 	var input_img = document.getElementById('book_png_1');
 	//获得背景页作为操作对象
 	var set_bg = document.getElementById('bg');
@@ -489,8 +487,10 @@ function set_sig_reg() {
 	//获得body操作对象
 	var body = document.getElementsByTagName('body')[0];
 	var sign_later = document.getElementById('sign_later');
-	signin_box.style.left = (window_width - signin_box_width) / 2 + 'px';
-	signin_box.style.top = (window_height - signin_box_height) / 2 + 'px';
+   var banner=document.getElementById("banner");
+	var submit_msg=document.getElementById("submit_msg");
+	var user_msg_sended=document.getElementById("user-sended-msg");
+	var array_element=[banner,submit_msg,user_msg_sended];
 	var sig=true;
 	input_img.onclick = function() {
 			if (sig== true) {
@@ -499,12 +499,17 @@ function set_sig_reg() {
 				set_bg.style.opacity = 0.5;
 				set_bg.style.zIndex = 1
 				set_bg.style.transition = 'all 0.1s ease';
+				for (var i=0;i<array_element.length;i++) {
+					array_element[i].style.filter="blur(5px)";
+					array_element[i].style.webkitFilter="blur(5px)";
+					array_element[i].style.mozFilter="blur(5px)";
+				}
 				document.body.style.overflowY="hidden";
 				body.onmousewheel = function() {
 					return false;
 				}
 			}
-			return sig=false;
+		  sig=false;
 		}
 		//逛一下功能按钮
 	function setSign_later() {
@@ -517,11 +522,16 @@ function set_sig_reg() {
 			input_img.style.zIndex = 0;
 			set_bg.style.transition = 'all 0.1s ease';
 			body.style.overflowY = 'visible';
+			for (var i=0;i<array_element.length;i++) {
+					array_element[i].style.filter="blur(0px)";
+					array_element[i].style.webkitFilter="blur(0px)";
+					array_element[i].style.mozFilter="blur(0px)";
+				}
 			body.onmousewheel = function() {
 				return true;
 			}
 		}
-		return sig=true;
+		 sig=true;
 	}
 	if(document.addEventListener){
 		sign_later.addEventListener("click",setSign_later,false);
