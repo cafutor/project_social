@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>my socially job</title>
-		<link rel="stylesheet" type="text/css" href="bootstrap-3.3.5-dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/social_job.css" />
 		<script src="js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/social_job.js" type="text/javascript" charset="utf-8"></script>
@@ -17,10 +17,10 @@
 		<div id="banner">
 			<div id="banner_ul">
 				<ul id="liebiao">
-					<li><a href="#"><b>首页</b></a></li>
-					<li><a href="#">技能学习</a></li>
-					<li><a href="#">职场经验</a></li>
-					<li><a href="#">面筋</a></li>
+					<li><a href="#"><b><font size="5">首页</font></b></a></li>
+					<li><a href="#"><font size="4">技能学习</font></a></li>
+					<li><a href="#"><font size="4">职场经验</font></a></li>
+					<li><a href="#"><font size="4">面筋</font></a></li>
 				</ul>
 				<img id="book_png_1" src="img/book.png" title="" />
 			</div>
@@ -46,11 +46,18 @@
 		<div id="signin">
 			<p id="email"><font face="微软雅黑" font size=4>邮箱:</font></p>
 			<input id="typeemail" type="text" placeholder=" 邮箱" />
-			<p id="password"><font face="微软雅黑" font size=4>密码:</font></p>
-			<input id="typepassword" type="text"  placeholder=" 密码"/>
+			<p id="password" ><font face="微软雅黑" font size=4>密码:</font></p>
+			<input id="typepassword"  type="password"  placeholder=" 密码"/>
+			<p id="re_password" class="password"><font face="微软雅黑" font size=4>重复密码:</font></p>
+			<input id="re_typepassword" class="typepassword" type="password"  placeholder=" 密码"/>
+			<p id="username"><font face="微软雅黑" font size=4>昵称:</font></p>
+			<input id="typename" type="text" placeholder=" 昵称" />
 			<button class="btn btn-success" id="submit_load">登陆</button>
 			<button class="btn btn-danger" id="sign_in">注册</button>
 			<button class="btn btn-warning" id="sign_later"><font face="微软雅黑">逛一下</font></button>
+			<span id="forget_password">
+				忘记密码
+			</span>
 		</div>
 	</body>
 </html>

@@ -1,7 +1,6 @@
 html{
 	margin: 0 auto;
 }
-
 body{
 	margin: 0 auto;
 	overflow-x: hidden;
@@ -163,26 +162,26 @@ body{
 }
 
 #signin{
-border-radius:10px 10px 10px 10px/10px 10px 10px 10px;
+	border-radius:10px 10px 10px 10px/10px 10px 10px 10px;
 	width: 500px;
 	height: 200px;
 	position: absolute;
 	background-color: #e2e4e3;
 	box-shadow: 0 0 4px black;
 	opacity: 0;
-	transition: all 0.1s ease;
+	transition: all 0s ease;
 	border-style: none;
 	left: -webkit-calc(50% - 250px);
-	top:-webkit-calc(50% - 100px);
+	top:-webkit-calc(50% - 130px);
 	left: -moz-calc(50% - 250px);
-	top:-moz-calc(50% - 100px);
+	top:-moz-calc(50% - 130px);
 	left: calc(50% - 250px);
-	top:calc(50% - 100px);
+	top:calc(50% - 130px);
 }
 #email{
 	position: absolute;
 	left: 69px;
-	top: 40px;
+	top: 25px;
 	line-height: 38px;
 }
 #typeemail{
@@ -190,20 +189,51 @@ border-radius:10px 10px 10px 10px/10px 10px 10px 10px;
 	width: 300px;
 	height: 38px;
 	left: 115px;
-	top: 40px;
+	top: 25px;
 }
 #password{
 	position: absolute;
 	line-height: 38px;
 	left:69px ;
-	top: 100px;
+	top: 75px;
 }
+
 #typepassword{
 	height: 38px;
 	width: 300px;
 	position: absolute;
 	left:115px ;
-	top: 100px;
+	top: 75px;
+}
+.password{
+	position: absolute;
+	line-height: 38px;
+	left:69px ;
+	top: 125px;
+	display: none;
+}
+.typepassword{
+	height: 38px;
+	width: 265px;
+	position: absolute;
+	left:150px ;
+	top: 125px;
+	display: none;
+}
+#username{
+	position: absolute;
+	left: 69px;
+	top: 175px;
+	line-height: 38px;
+	display: none;
+}
+#typename{
+	position: absolute;
+	width: 300px;
+	height: 38px;
+	left: 115px;
+	top: 175px;
+	display: none;
 }
 #sign_later{
 	position: absolute;
@@ -211,16 +241,30 @@ border-radius:10px 10px 10px 10px/10px 10px 10px 10px;
 	height: 30px;
 	line-height: 16px;
 	left:350px ;
-	top: 150px;
+	top: 135px;
 }
-
+#forget_password{
+	position: absolute;
+	width: 60px;
+	height: 30px;
+	line-height: 16px;
+	left:420px ;
+	top: 90px;
+	color: red;
+	font-family: "微软雅黑";
+	font-size: 5px;
+	cursor: pointer;
+}
+#forget_password:hover{
+	color: green;
+}
 #submit_load{
 	position: absolute;
 	width: 60px;
 	height: 30px;
 	line-height: 16px;
 	left:180px ;
-	top: 150px;
+	top: 135px;
 }
 #sign_in{
 	position: absolute;
@@ -228,9 +272,10 @@ border-radius:10px 10px 10px 10px/10px 10px 10px 10px;
 	height: 30px;
 	line-height: 16px;
 	left:265px ;
-	top: 150px;
+	top: 135px;
 }
 #bg{
+	background: url(../img/毛玻璃.jpg)no-repeat cover;
 	position: absolute;
 	left: 0px;
 	top: 0px;
@@ -239,4 +284,6 @@ border-radius:10px 10px 10px 10px/10px 10px 10px 10px;
 	background-color: #989898;
 	z-index: -1;
 	opacity: 0;
+	/*transition: all 0.1s ease;*/
 }
+

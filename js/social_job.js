@@ -487,29 +487,28 @@ function set_sig_reg() {
 	//获得body操作对象
 	var body = document.getElementsByTagName('body')[0];
 	var sign_later = document.getElementById('sign_later');
-   var banner=document.getElementById("banner");
+	var sig=true;
+	var banner=document.getElementById("banner");
 	var submit_msg=document.getElementById("submit_msg");
 	var user_msg_sended=document.getElementById("user-sended-msg");
 	var array_element=[banner,submit_msg,user_msg_sended];
-	var sig=true;
 	input_img.onclick = function() {
 			if (sig== true) {
-				signin_box.style.zIndex = 2;
 				signin_box.style.opacity = 1;
+				signin_box.style.zIndex = 2;
 				set_bg.style.opacity = 0.5;
 				set_bg.style.zIndex = 1
-				set_bg.style.transition = 'all 0.1s ease';
+				document.body.style.overflowY="hidden";
 				for (var i=0;i<array_element.length;i++) {
 					array_element[i].style.filter="blur(5px)";
 					array_element[i].style.webkitFilter="blur(5px)";
 					array_element[i].style.mozFilter="blur(5px)";
 				}
-				document.body.style.overflowY="hidden";
 				body.onmousewheel = function() {
 					return false;
 				}
 			}
-		  sig=false;
+			 sig=false;
 		}
 		//逛一下功能按钮
 	function setSign_later() {
@@ -517,21 +516,20 @@ function set_sig_reg() {
 			signin_box.style.zIndex = -1;
 			signin_box.style.opacity = 0;
 			set_bg.style.opacity = 0;
-
-			set_bg.style.zIndex = -2;
-			input_img.style.zIndex = 0;
-			set_bg.style.transition = 'all 0.1s ease';
-			body.style.overflowY = 'visible';
-			for (var i=0;i<array_element.length;i++) {
+            for (var i=0;i<array_element.length;i++) {
 					array_element[i].style.filter="blur(0px)";
 					array_element[i].style.webkitFilter="blur(0px)";
 					array_element[i].style.mozFilter="blur(0px)";
 				}
+			set_bg.style.zIndex = -2;
+			input_img.style.zIndex = 0;
+			set_bg.style.transition = 'all 0.1s ease';
+			body.style.overflowY = 'visible';
 			body.onmousewheel = function() {
 				return true;
 			}
 		}
-		 sig=true;
+		sig=true;
 	}
 	if(document.addEventListener){
 		sign_later.addEventListener("click",setSign_later,false);
@@ -545,16 +543,39 @@ function set_sig_reg() {
 	function getval () {
 		var pasword=document.getElementById("typepassword").value;
 		var email=document.getElementById("typeemail").value;
-		$.ajax({
+		var name=document.getElementById("typename").value;
+		var sigin=document.getElementById("signin");
+		sigin.style.height="300px";
+		var forget_password=document.getElementById("forget_password");
+		forget_password.style.display="none";
+		var submit_load=document.getElementById("submit_load");
+		var sign_in=document.getElementById("sign_in");
+		var sign_later=document.getElementById("sign_later");
+		var user_name=document.getElementById("username");
+		var type_name=document.getElementById("typename")
+		var re_password=document.getElementById("re_password");
+		var re_typepassword=document.getElementById("re_typepassword");
+		var array_btn=[submit_load,sign_in,sign_later,re_password,re_typepassword,user_name,type_name];
+		for (var i=0;i<array_btn.length;i++) {
+			if(i>=3){
+				array_btn[i].style.display="block";
+			}else{
+				array_btn[i].style.top="240px";
+			}
+		}
+		//表单验证成功后才能发送ajax请求
+					$.ajax({
 			type:"post",
 			url:"php/register.php",
 			async:true,
-			data:{"userpassword":pasword,"useremail":email},
+			data:{"userpassword":pasword,"useremail":email,"username":name},
 			dataType:"html",
-			success:function(){
-				console.log("submit suecess");
+			success:function(data,status){
+				console.log(data);
 			}
-		})
+	
+		});
+
 	}
 var regbtn=document.getElementById("sign_in");
 if(document.addEventListener){
@@ -564,8 +585,41 @@ if(document.addEventListener){
 }else{
 	regbtn.onclick=getval ;
 }
+
 }
 	setreg ();
+	//登陆
+function load () {
+	var btn_load=document.getElementById("submit_load");
+function setLoad () {
+	var re_password=document.getElementById("re_password");
+	var re_typepassword=document.getElementById("re_typepassword");
+	var username=document.getElementById("username");
+	var type_name=document.getElementById("typename");
+	if (re_password.style.display==="block") {
+		re_password.style.display="none";
+		re_typepassword.style.display="none";
+		username.style.display="none";
+		type_name.style.display="none";
+		var btns=document.getElementsByClassName("btn");
+		for (var i=0;i<btns.length;i++) {
+			btns[i].style.top="135px";
+		}
+		document.getElementById("forget_password").style.display="block";
+		document.getElementById("signin").style.height="200px";
+	} else{
+		
+	}
+};
+if(document.addEventListener){
+	btn_load.addEventListener("click",setLoad ,false);
+}else if(window.attachEvent){
+	btn_load.attachEvent("onclick",setLoad );
+}else{
+	btn_load.onclick=setLoad ;
+}
+}
+load ();
 }
 
 //禁用ctrl+滚轮键放大图片
@@ -591,6 +645,6 @@ window.onload = function() {
 	disabled_wheel();
 	//设置信息区域的功能
 	set_write_msg();
-	//登陆于提交
+	//登陆提交
 	set_sig_reg()
 }
