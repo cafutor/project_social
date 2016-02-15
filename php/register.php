@@ -4,6 +4,7 @@
 		die("failed to connect database".mysql_error());
 	}
 	$time=date("YmdHis");
+	
     mysql_query("SET NAMES 'UTF8'");
 	mysql_select_db("htsocialjob",$con);
 	$password=md5(trim($_POST['userpassword']));

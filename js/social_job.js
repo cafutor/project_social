@@ -624,6 +624,7 @@ load ();
 
 //禁用ctrl+滚轮键放大图片
 function disabled_wheel() {
+	
 	var scrollFunc = function(e) {
 		e = e || window.event;
 		if (e.wheelDelta && event.ctrlKey) { //IE/Opera/Chrome 

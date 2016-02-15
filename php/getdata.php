@@ -6,6 +6,7 @@
 	mysql_query("SET NAMES UTF8");
 	mysql_select_db("htsocialjob",$con);
 	$sql="SELECT user_msg FROM angelSweety";
+	
 	$data=mysql_query($sql,$con);
 	$columnlen=mysql_num_rows($data);
 	$num=0;

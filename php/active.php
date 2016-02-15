@@ -7,6 +7,7 @@
 //	$set_num=substr(date('YmdHi'),10,2);
 //	$regtime=substr(substr($_GET['regtime'], 0,11),9,1)
     mysql_query("SET NAMES 'UTF8'");
+	
 	mysql_select_db("htsocialjob",$con);
 	$username=$_GET['username'];
 	$sql_token="SELECT  token FROM  ".$username." where user_active_status=0";

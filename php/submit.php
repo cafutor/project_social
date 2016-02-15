@@ -7,6 +7,7 @@ if(!$con){
 }
     mysql_query("SET NAMES UTF8");
 	mysql_select_db("htsocialjob",$con);
+	
 	$txt=$_POST['saytxt'];
 	mysql_query("INSERT INTO angelSweety(user_msg)VALUES('$txt')");
 	mysql_close($con);
