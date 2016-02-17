@@ -541,30 +541,71 @@ function set_sig_reg() {
 	//注册
 	function setreg () {
 	function getval () {
+		//密码
 		var pasword=document.getElementById("typepassword").value;
+		var error_password=document.getElementById("password_error");
+		//邮箱
 		var email=document.getElementById("typeemail").value;
-		var name=document.getElementById("typename").value;
+		//邮箱输入错误
+		var error_email=document.getElementById("email_error");
 		var sigin=document.getElementById("signin");
-		sigin.style.height="300px";
+		sigin.style.height="350px";
+		//忘记密码
 		var forget_password=document.getElementById("forget_password");
 		forget_password.style.display="none";
 		var submit_load=document.getElementById("submit_load");
 		var sign_in=document.getElementById("sign_in");
 		var sign_later=document.getElementById("sign_later");
 		var user_name=document.getElementById("username");
-		var type_name=document.getElementById("typename")
+		var type_name=document.getElementById("typename");
+		//用户名
+		var name=type_name.value;
 		var re_password=document.getElementById("re_password");
+		var error_username=document.getElementById("username_error");
+	
+		var checknumber=document.getElementById("checknumber");
+		
+		var error_repassword=document.getElementById("repassword_error");
+		checknumber.style.display="block";
+		//获取验证码
+		var checknumber_value=checknumber.value;
+		var pchecknumber=document.getElementById("p_checknumber");
+		var error_checknumber=document.getElementById("checknumber_error");
+		pchecknumber.style.display="block";
 		var re_typepassword=document.getElementById("re_typepassword");
+			//重复密码
+		var re_password_value=re_typepassword.value;
 		var array_btn=[submit_load,sign_in,sign_later,re_password,re_typepassword,user_name,type_name];
+	
 		for (var i=0;i<array_btn.length;i++) {
 			if(i>=3){
 				array_btn[i].style.display="block";
 			}else{
-				array_btn[i].style.top="240px";
+				array_btn[i].style.top="290px";
 			}
 		}
-		//表单验证成功后才能发送ajax请求
-					$.ajax({
+		//验证
+		function check(){
+			var reg=new RegExp(".com","g");
+			if(!email.match(reg)&&email!==""){
+				error_email.innerHTML="请输入正确的邮箱";
+			}else{
+				error_email.innerHTML="";
+			}
+			if (pasword.length<8&&pasword.length>0) {
+				error_password.innerHTML="最少8位";
+			}else if (pasword.length>=13) {
+				error_password.innerHTML="最多13位";
+			}else if (re_password_value!==pasword&&re_password_value!==""&&pasword!=="") {
+				error_repassword.innerHTML="密码不相等";
+			}else if(re_password_value===pasword&&re_password_value!==""&&pasword!==""){
+					error_repassword.innerHTML="";
+					  error_password.innerHTML="";
+			}
+		}
+		check();
+		//check test
+			$.ajax({
 			type:"post",
 			url:"php/register.php",
 			async:true,
@@ -573,9 +614,7 @@ function set_sig_reg() {
 			success:function(data,status){
 				console.log(data);
 			}
-	
 		});
-
 	}
 var regbtn=document.getElementById("sign_in");
 if(document.addEventListener){
@@ -585,7 +624,6 @@ if(document.addEventListener){
 }else{
 	regbtn.onclick=getval ;
 }
-
 }
 	setreg ();
 	//登陆
@@ -596,6 +634,10 @@ function setLoad () {
 	var re_typepassword=document.getElementById("re_typepassword");
 	var username=document.getElementById("username");
 	var type_name=document.getElementById("typename");
+	var checknumber=document.getElementById("checknumber");
+	var pchecknumber=document.getElementById("p_checknumber");
+		pchecknumber.style.display="none";
+		checknumber.style.display="none";
 	if (re_password.style.display==="block") {
 		re_password.style.display="none";
 		re_typepassword.style.display="none";
@@ -610,6 +652,12 @@ function setLoad () {
 	} else{
 		
 	}
+	var span_error=document.getElementById("signin").getElementsByTagName("span");
+	for(var i=0;i<span_error.length;i++){
+		if(span_error[i].innerHTML!=="忘记密码"){
+		span_error[i].style.display="none";
+		}
+	}
 };
 if(document.addEventListener){
 	btn_load.addEventListener("click",setLoad ,false);
@@ -621,10 +669,8 @@ if(document.addEventListener){
 }
 load ();
 }
-
 //禁用ctrl+滚轮键放大图片
 function disabled_wheel() {
-	
 	var scrollFunc = function(e) {
 		e = e || window.event;
 		if (e.wheelDelta && event.ctrlKey) { //IE/Opera/Chrome 
