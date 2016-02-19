@@ -46,28 +46,28 @@
 		<div id="signin">
 			<p id="email"><font face="微软雅黑" font size=4>邮箱:</font></p>
 			<input id="typeemail" type="text" placeholder=" 邮箱" />
-			<span id="email_error"></span>
+			<span id="email_error"  style="font-family: '微软雅黑';"></span>
 			
 			<p id="password" ><font face="微软雅黑" font size=4>密码:</font></p>
 			<input id="typepassword"  type="password"  placeholder=" 密码"/>
-			<span id="password_error" ></span>
+			<span id="password_error"  style="font-family: '微软雅黑';"></span>
 			
 			<p id="re_password" class="password"><font face="微软雅黑" font size=4>重复密码:</font></p>
 			<input id="re_typepassword" class="typepassword" type="password"  placeholder=" 密码"/>
-			<span id="repassword_error" ></span>
+			<span id="repassword_error"  style="font-family: '微软雅黑';"></span>
 			
 			<p id="username"><font face="微软雅黑" font size=4>昵称:</font></p>
 			<input id="typename" type="text" placeholder=" 昵称" />
-			<span id="username_error"></span>
-			
+			<span id="username_error"  style="font-family: '微软雅黑';"></span>
 			<button class="btn btn-success" id="submit_load">登陆</button>
 			<button class="btn btn-danger" id="sign_in">注册</button>
+			<button class="btn btn-danger" id="sign_in_1">注册</button>
 			<button class="btn btn-warning" id="sign_later">逛一下</button>
 			<span id="forget_password">忘记密码</span>
 			<!--验证码-->
 		   <p id="p_checknumber"><font face="微软雅黑" font size=4>输入验证码：</font></p>
 		 <div id="checknumber" class="checknumber">
-		 	<img width="120" height="40" style="position: absolute;left: 0px;" src=""/>
+		 	<img  id="img_checknumber" width="120" height="40" style="position: absolute;left: 0px;cursor: pointer;"/>
 		 	<input style="width: 120px;height: 40px;" type="" name="in_checknumber" id="in_checknumber" value="" placeholder="请输入验证码" />
 		 </div>
 		 <span id="checknumber_error" style="color: red;"> </span>

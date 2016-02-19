@@ -1,5 +1,5 @@
 function sed_personal_div() {
-	//页面登陆*者登陆从数据库中加载数据
+	//页面打开就从数据库加载数据
 function getData () {
 	$.ajax({
 		type:"post",
@@ -10,9 +10,9 @@ function getData () {
 			var jsonnum=jsondata.length;
 			function setGetData () {
 		var c = 0;
-	    //得到时间对象的实例
-	    var time=new Date();
-	    var otime=time.getUTCFullYear()+'年'+time.getUTCMonth()+1+'月'+time.getUTCDay();
+	    
+//	    var time=new Date();
+//	    var otime=time.getUTCFullYear()+'年'+time.getUTCMonth()+1+'月'+time.getUTCDay();
 		//得到信息呈现区的所用div对象
 		var container = document.createElement('div');
 		var personal_1_pic_div = document.createElement('div');
@@ -450,9 +450,9 @@ function set_write_msg() {
 	var sed_Button = document.getElementById('sed_button');
 	sed_Button.style.zIndex = -1;
 	num_count.innerHTML = "还能输入"+ parseInt(200 - str_length) +"个字符";
-	//当鼠标聚焦在textarea中时sed_button的z_index才为1
+	//当鼠标聚焦在textarea中时sed_button的z_index为1
 	//当鼠标聚焦在textarea时
-	owrite_msg.onkeyup = function() {
+	 function user_write_msg() {
 		var owrite_value_count = owrite_msg.value;
 		//获取要操作的提交按钮所处于的div对象
 		var sed_Message = document.getElementById('sed_message');
@@ -472,7 +472,13 @@ function set_write_msg() {
 		} else {
 			sed_Button.style.zIndex = 1;
 		}
-
+	}
+		if(document.addEventListener){
+		owrite_msg.addEventListener("keyup",user_write_msg);
+	}else if(document.attachEvent){
+		owrite_msg.attachEvent("onkeyup",user_write_msg);
+	}else{
+		owrite_msg.onkeyup=user_write_msg;
 	}
 }
 //登陆和注册||设置背景页透明效果
@@ -494,6 +500,7 @@ function set_sig_reg() {
 	var array_element=[banner,submit_msg,user_msg_sended];
 	input_img.onclick = function() {
 			if (sig== true) {
+				signin_box.style.display="block";
 				signin_box.style.opacity = 1;
 				signin_box.style.zIndex = 2;
 				set_bg.style.opacity = 0.5;
@@ -513,6 +520,7 @@ function set_sig_reg() {
 		//逛一下功能按钮
 	function setSign_later() {
 		if (sig== false) {
+			signin_box.style.display="none";
 			signin_box.style.zIndex = -1;
 			signin_box.style.opacity = 0;
 			set_bg.style.opacity = 0;
@@ -540,6 +548,24 @@ function set_sig_reg() {
 	}
 	//注册
 	function setreg () {
+		//check number
+		var img_checknumber=document.getElementById("img_checknumber");
+		img_checknumber.src="php/checknumber.php";
+		function  refresh_check_number(){
+			$.ajax({
+				type:"get",
+				url:"php/checknumber.php",
+				async:true
+			});
+			img_checknumber.src="php/checknumber.php";
+		}
+		if(document.addEventListener){
+			img_checknumber.addEventListener("click",refresh_check_number);
+		}else if(document.attachEvent){
+			img_checknumber.attachEvent("onclick",refresh_check_number);
+		}else{
+			img_checknumber.onclick=refresh_check_number;
+		}
 	function getval () {
 		//密码
 		var pasword=document.getElementById("typepassword").value;
@@ -562,9 +588,8 @@ function set_sig_reg() {
 		var name=type_name.value;
 		var re_password=document.getElementById("re_password");
 		var error_username=document.getElementById("username_error");
-	
+	    
 		var checknumber=document.getElementById("checknumber");
-		
 		var error_repassword=document.getElementById("repassword_error");
 		checknumber.style.display="block";
 		//获取验证码
@@ -586,25 +611,46 @@ function set_sig_reg() {
 		}
 		//验证
 		function check(){
+			var a;
 			var reg=new RegExp(".com","g");
 			if(!email.match(reg)&&email!==""){
-				error_email.innerHTML="请输入正确的邮箱";
+				error_email.innerHTML="邮箱格式不正确";
+			}else if(email===""){
+				error_email.innerHTML="请输入邮箱";
 			}else{
 				error_email.innerHTML="";
+				a=2;
 			}
 			if (pasword.length<8&&pasword.length>0) {
 				error_password.innerHTML="最少8位";
-			}else if (pasword.length>=13) {
-				error_password.innerHTML="最多13位";
-			}else if (re_password_value!==pasword&&re_password_value!==""&&pasword!=="") {
-				error_repassword.innerHTML="密码不相等";
-			}else if(re_password_value===pasword&&re_password_value!==""&&pasword!==""){
-					error_repassword.innerHTML="";
-					  error_password.innerHTML="";
 			}
-		}
-		check();
-		//check test
+			if (pasword==="") {
+				error_password.innerHTML="请输入密码";
+			}
+			if (pasword.length>=13) {
+				error_password.innerHTML="最多13位";
+			}
+			if (pasword.length>=8&&pasword.length<=13&&re_password_value==="") {
+				error_password.innerHTML="";
+				error_password.innerHTML="请再次输入密码";
+			}
+			if (re_password_value!==pasword&&re_password_value!==""&&pasword!=="") {
+				error_repassword.innerHTML="密码不相等";
+			}
+			if (type_name.value==="") {
+				error_username.innerHTML="请输入昵称";
+			}
+			if(type_name.value.match(/[^a-zA-Z0-9\u4E00-\u9FA5]/g)){
+				error_username.innerHTML="只能输入数字,英文或中文字符";
+			}
+			if (type_name.value.length>17) {
+				error_username.innerHTML="昵称字数只能小于17";
+			}
+			if(re_password_value===pasword&&re_password_value!==""&&pasword!==""&&type_name.value!==""&&type_name.value.length<=17&&!type_name.value.match(/[^a-zA-Z0-9\u4E00-\u9FA5]/g&&a===2)){
+					  error_repassword.innerHTML="";
+					  error_password.innerHTML="";
+					  error_username.innerHTML="";
+					  error_email.innerHTML="";
 			$.ajax({
 			type:"post",
 			url:"php/register.php",
@@ -612,14 +658,68 @@ function set_sig_reg() {
 			data:{"userpassword":pasword,"useremail":email,"username":name},
 			dataType:"html",
 			success:function(data,status){
-				console.log(data);
+				console.log(status);
+				if(status===200){
+					window.location.href="www.baidu.com";
+				}
 			}
 		});
+			}
+		}
+		check();
+		
 	}
+	function reg_btn_before () {
+		var sigin=document.getElementById("signin");
+		sigin.style.height="350px";
+		//忘记密码
+		var forget_password=document.getElementById("forget_password");
+		forget_password.style.display="none";
+		var submit_load=document.getElementById("submit_load");
+		var sign_in=document.getElementById("sign_in");
+		var sign_later=document.getElementById("sign_later");
+		var user_name=document.getElementById("username");
+		var type_name=document.getElementById("typename");
+		//用户名
+		var re_password=document.getElementById("re_password");
+		var checknumber=document.getElementById("checknumber");
+		var regbtn_before=document.getElementById("sign_in_1");
+		regbtn_before.style.display="none";
+		checknumber.style.display="block";
+		//获取验证码
+		var pchecknumber=document.getElementById("p_checknumber");
+		pchecknumber.style.display="block";
+		var re_typepassword=document.getElementById("re_typepassword");
+			//重复密码
+		var array_btn=[submit_load,sign_in,sign_later,re_password,re_typepassword,user_name,type_name];
+		for (var i=0;i<array_btn.length;i++) {
+			if(i>=3){
+				array_btn[i].style.display="block";
+			}else{
+				array_btn[i].style.top="290px";
+			}
+		}
+		var span_error=document.getElementById("signin").getElementsByTagName("span");
+	for(var i=0;i<span_error.length;i++){
+		if(span_error[i].innerHTML!=="忘记密码"){
+		span_error[i].style.display="block";
+		span_error[i].innerHTML="";
+		}
+	}
+	}
+	//btn get reg page
+var regbtn_before=document.getElementById("sign_in_1");
+if(document.addEventListener){
+	regbtn_before.addEventListener("click",reg_btn_before ,false);
+}else if(document.attachEvent){
+	regbtn_before.attachEvent("onclick",reg_btn_before );
+}else{
+	regbtn_before.onclick=reg_btn_before ;
+}
 var regbtn=document.getElementById("sign_in");
 if(document.addEventListener){
 	regbtn.addEventListener("click",getval ,false);
-}else if(window.attachEvent){
+}else if(document.attachEvent){
 	regbtn.attachEvent("onclick",getval );
 }else{
 	regbtn.onclick=getval ;
@@ -630,12 +730,10 @@ if(document.addEventListener){
 function load () {
 	var btn_load=document.getElementById("submit_load");
 function setLoad () {
-	var re_password=document.getElementById("re_password");
-	var re_typepassword=document.getElementById("re_typepassword");
-	var username=document.getElementById("username");
-	var type_name=document.getElementById("typename");
-	var checknumber=document.getElementById("checknumber");
-	var pchecknumber=document.getElementById("p_checknumber");
+var re_password=document.getElementById("re_password"), re_typepassword=document.getElementById("re_typepassword"),
+username=document.getElementById("username"), type_name=document.getElementById("typename"),checknumber=document.getElementById("checknumber"),
+pchecknumber=document.getElementById("p_checknumber"),regbtn_before=document.getElementById("sign_in_1");
+		regbtn_before.style.display="block";
 		pchecknumber.style.display="none";
 		checknumber.style.display="none";
 	if (re_password.style.display==="block") {

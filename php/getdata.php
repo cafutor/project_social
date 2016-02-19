@@ -1,7 +1,7 @@
 ﻿<?php 
 	$con=mysql_connect("127.0.0.1","root","");
 	if(!$con){
-		die("链接数据库失败".mysql_error());
+		die(" failed to connect mysql".mysql_error());
 	}
 	mysql_query("SET NAMES UTF8");
 	mysql_select_db("htsocialjob",$con);

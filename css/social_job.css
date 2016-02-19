@@ -178,6 +178,7 @@ body{
 	top:-moz-calc(50% - 180px);
 	left: calc(50% - 250px);
 	top:calc(50% - 180px);
+  display: none;
 }
 #email{
 	position: absolute;
@@ -317,6 +318,14 @@ body{
 	top: 135px;
 }
 #sign_in{
+	position: absolute;
+	width: 60px;
+	height: 30px;
+	line-height: 16px;
+	left:265px ;
+	top: 135px;
+}
+#sign_in_1{
 	position: absolute;
 	width: 60px;
 	height: 30px;
