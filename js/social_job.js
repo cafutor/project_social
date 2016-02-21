@@ -40,7 +40,7 @@ function getData () {
 	    femaleWorkingExperience.innerHTML=msg_data.data[3].femaleWorkingexperience;
 		
 		user_msg_sended.appendChild(container);
-		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;;transition: all 0.7s ease;position: absolute;';
+		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;;transition: all 0.3s ease;position: absolute;';
 		container.appendChild(personal_1_pic_div);
 		//女性标志div
 		container.appendChild(femaleDiv);
@@ -123,7 +123,7 @@ function getData () {
 		discussSedbtn.innerHTML='发送';
 		discussSedbtn.style.cssText="position: absolute;left: 910px;bottom:10px ;font-family: 微软雅黑; vertical-align: middle;";
 		disscussInput.style.cssText="width: 800px;height: 50px;position: absolute;left: 95px;bottom: 10px;resize: none;";
-		discussArea.style.cssText = "width:990px;height:0px;position:absolute;top:146px;left:5px;;background-color:#c0dff8; transition: all 0.3s ease;overflow: hidden;"
+		discussArea.style.cssText = "width:990px;height:0px;position:absolute;top:146px;left:5px;;background-color:white; transition: all 0.1s ease;overflow: hidden;"
 		var discussAreaDivs = [];
 		for (var i = 0; i < divs.length; i++) {
 			if (divs[i].offsetWidth == 990) {
@@ -222,7 +222,7 @@ function setClick () {
 			
 		})(); 
 		//通过ajax来提交textarea中字符串和数字
-		function fileupload() {
+		function msg_upload() {
          	$.ajax({
 		   type: "POST",
 		   url: "php/submit.php",
@@ -234,7 +234,7 @@ function setClick () {
 		   }
 	    });
 		}
-		fileupload();
+		msg_upload();
 		//textarea的value提交后变为0按钮背景颜色还原
 		function clearVlaue() {
 			document.getElementById('sed_message').style.backgroundColor = '#eceeee';
@@ -272,7 +272,7 @@ function setClick () {
 	    femaleWorkingExperience.innerHTML=msg_data.data[3].femaleWorkingexperience;
 		
 		user_msg_sended.appendChild(container);
-		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;;transition: all 0.3s ease;position: absolute;';
+		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;transition: all 0.3s ease;position: absolute;';
 		container.appendChild(personal_1_pic_div);
 		//女性标志div
 		container.appendChild(femaleDiv);
@@ -283,7 +283,6 @@ function setClick () {
 	   container.appendChild(femaleWorkingExperienceHeader);
 	   container.appendChild(femaleId);
 		container.appendChild(femaleWorkingExperience);
-		
 		personal_1_pic_div.style.cssText = 'width: 150px;height: 141px;position: relative;top: 0px;left: 0px;background-color:white;overflow: hidde;border-radius: 3px 3px 3px 3px/3px 3px 3px 3px;box-shadow: 0 0 4px #4CAE4C;';
 		container.appendChild(personal_writed_msg_div);
 		personal_writed_msg_div.style.cssText = "width: 450px;height: 100px;position: relative;background-color:;left: 518px;top: -135px;"
@@ -356,14 +355,13 @@ function setClick () {
 		discussSedbtn.innerHTML='发送';
 		discussSedbtn.style.cssText="position: absolute;left: 910px;bottom:10px ;font-family: 微软雅黑; vertical-align: middle;";
 		disscussInput.style.cssText="width: 800px;height: 50px;position: absolute;left: 95px;bottom: 10px;resize: none;";
-		discussArea.style.cssText = "width:990px;height:0px;position:absolute;top:146px;left:5px;;background-color:#c0dff8; transition: all 0.3s ease;overflow: hidden;"
+		discussArea.style.cssText = "width:990px;height:0px;position:absolute;top:146px;left:5px;;background-color:#c0dff8; transition: all 0.1s ease;overflow: hidden;"
 		var discussAreaDivs = [];
 		for (var i = 0; i < divs.length; i++) {
 			if (divs[i].offsetWidth == 990) {
 				discussAreaDivs.push(divs[i]);
 			}
 		}
-      
 		var discussInputs=document.getElementsByTagName('textarea');
 		var discussInputsarray=[];
 		for (var discussInputsNum=0;discussInputsNum<discussInputs.length;discussInputsNum++){
@@ -487,7 +485,7 @@ function set_sig_reg() {
 	var window_height = window.innerHeight;
 	var signin_box = document.getElementById('signin');
 	var input_img = document.getElementById('book_png_1');
-	//获得背景页作为操作对象
+	//背景蒙板
 	var set_bg = document.getElementById('bg');
 	//获得稍后操作作为操作对象
 	//获得body操作对象
@@ -498,13 +496,14 @@ function set_sig_reg() {
 	var submit_msg=document.getElementById("submit_msg");
 	var user_msg_sended=document.getElementById("user-sended-msg");
 	var array_element=[banner,submit_msg,user_msg_sended];
-	input_img.onclick = function() {
+	 function set_page_background() {
 			if (sig== true) {
 				signin_box.style.display="block";
 				signin_box.style.opacity = 1;
 				signin_box.style.zIndex = 2;
 				set_bg.style.opacity = 0.5;
 				set_bg.style.zIndex = 1
+				set_bg.style.display= "block";
 				document.body.style.overflowY="hidden";
 				for (var i=0;i<array_element.length;i++) {
 					array_element[i].style.filter="blur(5px)";
@@ -517,6 +516,13 @@ function set_sig_reg() {
 			}
 			 sig=false;
 		}
+	if(document.addEventListener){
+	   input_img.addEventListener("click", set_page_background);
+	}else if(document.attachEvent){
+		 input_img.attachEvent("onclick",set_page_background);
+	}else{
+		input_img.onclick=set_page_background;
+	}
 		//逛一下功能按钮
 	function setSign_later() {
 		if (sig== false) {
@@ -529,9 +535,9 @@ function set_sig_reg() {
 					array_element[i].style.webkitFilter="blur(0px)";
 					array_element[i].style.mozFilter="blur(0px)";
 				}
-			set_bg.style.zIndex = -2;
+			set_bg.style.display = "none";
 			input_img.style.zIndex = 0;
-			set_bg.style.transition = 'all 0.1s ease';
+//			set_bg.style.transition = 'all 0.1s ease';
 			body.style.overflowY = 'visible';
 			body.onmousewheel = function() {
 				return true;
@@ -596,12 +602,13 @@ function set_sig_reg() {
 		var checknumber_value=checknumber.value;
 		var pchecknumber=document.getElementById("p_checknumber");
 		var error_checknumber=document.getElementById("checknumber_error");
+		var inchecknumber=document.getElementById("in_checknumber").value.toLowerCase();
 		pchecknumber.style.display="block";
 		var re_typepassword=document.getElementById("re_typepassword");
 			//重复密码
 		var re_password_value=re_typepassword.value;
 		var array_btn=[submit_load,sign_in,sign_later,re_password,re_typepassword,user_name,type_name];
-	
+	    
 		for (var i=0;i<array_btn.length;i++) {
 			if(i>=3){
 				array_btn[i].style.display="block";
@@ -611,7 +618,24 @@ function set_sig_reg() {
 		}
 		//验证
 		function check(){
-			var a;
+			$.ajax({
+				type:"post",
+				url:"php/inchecknumber.php",
+				async:true,
+				dataType:"html",
+				data:{"check_num":inchecknumber},
+				success:function(data){
+				var num=parseInt(data);
+				if(num===1){
+					error_checknumber.innerHTML="";
+					console.log();
+					}
+				if(num===0){
+						document.getElementById("checknumber_error").innerHTML=document.getElementById("in_checknumber").value.length>0?"验证码错误":"请输入验证码";
+					}
+				}
+			});
+			var a,b,c;
 			var reg=new RegExp(".com","g");
 			if(!email.match(reg)&&email!==""){
 				error_email.innerHTML="邮箱格式不正确";
@@ -619,8 +643,9 @@ function set_sig_reg() {
 				error_email.innerHTML="请输入邮箱";
 			}else{
 				error_email.innerHTML="";
-				a=2;
+				a=true;
 			}
+			//password
 			if (pasword.length<8&&pasword.length>0) {
 				error_password.innerHTML="最少8位";
 			}
@@ -637,37 +662,76 @@ function set_sig_reg() {
 			if (re_password_value!==pasword&&re_password_value!==""&&pasword!=="") {
 				error_repassword.innerHTML="密码不相等";
 			}
+			if(re_password_value===pasword&&re_password_value!==""&&pasword!==""){
+				error_password.innerHTML="";
+				error_repassword.innerHTML="";
+				b=true;
+			}
+			//name
 			if (type_name.value==="") {
 				error_username.innerHTML="请输入昵称";
 			}
 			if(type_name.value.match(/[^a-zA-Z0-9\u4E00-\u9FA5]/g)){
-				error_username.innerHTML="只能输入数字,英文或中文字符";
+				error_username.innerHTML="非法字符";
 			}
-			if (type_name.value.length>17) {
-				error_username.innerHTML="昵称字数只能小于17";
+			if (type_name.value.length>13) {
+				error_username.innerHTML="昵称字数只能小于14";
 			}
-			if(re_password_value===pasword&&re_password_value!==""&&pasword!==""&&type_name.value!==""&&type_name.value.length<=17&&!type_name.value.match(/[^a-zA-Z0-9\u4E00-\u9FA5]/g&&a===2)){
-					  error_repassword.innerHTML="";
-					  error_password.innerHTML="";
-					  error_username.innerHTML="";
-					  error_email.innerHTML="";
-			$.ajax({
+			if(type_name.value!==""&&type_name.value.length<=13&&!type_name.value.match(/[^a-zA-Z0-9\u4E00-\u9FA5]/g)){
+				error_username.innerHTML="";
+				c=true;
+			}
+			if(a===true&&b===true&&c===true){
+				$.ajax({
+				type:"post",
+				url:"php/inchecknumber.php",
+				async:true,
+				dataType:"html",
+				data:{"check_num":inchecknumber},
+				success:function(data){
+				var p=false,k=false;
+				var data_array=eval(decodeURI(data));
+				for (var i=0;i<data_array[0].length;i++) {
+					if(type_name.value===data_array[0][i]){
+						error_username.innerHTML="昵称已存在";
+						p=true;
+						console.log(data_array[0][i]);
+					}
+				}
+				for (var l=0;l<data_array[1].length;l++) {
+										if (email===data_array[1][l]) {
+							error_email.innerHTML="邮箱已经注册";
+							k=true;
+					}
+				}
+				if(data_array[2]===1&&p===false&&k===false){
+					error_checknumber.innerHTML="";
+					error_email.innerHTML="";
+					error_username.innerHTML="";
+					$.ajax({
 			type:"post",
 			url:"php/register.php",
 			async:true,
 			data:{"userpassword":pasword,"useremail":email,"username":name},
 			dataType:"html",
 			success:function(data,status){
-				console.log(status);
-				if(status===200){
-					window.location.href="www.baidu.com";
+				email="";
+				type_name.value="";
+				document.getElementById("in_checknumber").value="";
+				if(status==="success"){
+					window.location.href="reg.html";
 				}
 			}
-		});
+		});					 					
+		        }
+				if(data_array[2]===0){
+						document.getElementById("checknumber_error").innerHTML=document.getElementById("in_checknumber").value.length>0?"验证码错误":"请输入验证码";
+					}
+				}
+			});
 			}
 		}
 		check();
-		
 	}
 	function reg_btn_before () {
 		var sigin=document.getElementById("signin");
@@ -699,6 +763,7 @@ function set_sig_reg() {
 				array_btn[i].style.top="290px";
 			}
 		}
+
 		var span_error=document.getElementById("signin").getElementsByTagName("span");
 	for(var i=0;i<span_error.length;i++){
 		if(span_error[i].innerHTML!=="忘记密码"){
@@ -728,7 +793,7 @@ if(document.addEventListener){
 	setreg ();
 	//登陆
 function load () {
-	var btn_load=document.getElementById("submit_load");
+var btn_load=document.getElementById("submit_load");
 function setLoad () {
 var re_password=document.getElementById("re_password"), re_typepassword=document.getElementById("re_typepassword"),
 username=document.getElementById("username"), type_name=document.getElementById("typename"),checknumber=document.getElementById("checknumber"),
@@ -786,7 +851,7 @@ function disabled_wheel() {
 window.onload = function() {
 	//用户提交信息呈现
 	sed_personal_div()
-	//*************
+	//***
 	disabled_wheel();
 	//设置信息区域的功能
 	set_write_msg();

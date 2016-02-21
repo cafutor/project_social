@@ -33,13 +33,11 @@ session_start();
     ob_clean();
     @imagefttext($im, $size , 0, 9, $size + 3, $text_color, 'c:\\WINDOWS\\Fonts\\simsun.ttc', $code);
     //conserve checknumber
-    $_SESSION["VerifyCode"]=$code;
+    $_SESSION['checkCode']=$code;
     header("Cache-Control: max-age=1, s-maxage=1, no-cache, must-revalidate");
     header("Content-type: image/png;charset=gb2312");
     //output image
     imagepng($im);
     //destory image
     imagedestroy($im);
-    
-
 ?>

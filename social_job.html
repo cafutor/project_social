@@ -27,17 +27,23 @@
 		</div>
 		<div id="submit_msg">
 			<div id="count"><font face="微软雅黑" font size="4"><span id="out_word"></span><span id="num">200</spn><span id="num_af">个字符</span></font></div>
-			<div id="jiayou_img">
+			<div id="title_img">
 			</div>
 			<textarea id="write_msg" name="write_msg" class="input" rows="" cols=""></textarea>
-			<div id="fileInputContainer" title="添加图片" onclick="fileSelect()">
-				<input id="fileInput" type="file" name="" title="添加图片" />
-			</div>
+			<!--
+            	图片上传
+            -->
+			<!--<div id="fileInputContainer" title="添加图片" onclick="fileSelect()">
+					<input id="fileInput" type="file" name="" title="添加图片" />
+			</div>-->
 			<div id="sed_message">
 				<input id="sed_button" type="button" name="" title="发送" />
 			</div>
 			<div id="personal_img">
 			</div>
+		</div>
+		<div id="">
+			
 		</div>
 		<div id="user-sended-msg">
 		</div>
@@ -45,19 +51,19 @@
        </div>
 		<div id="signin">
 			<p id="email"><font face="微软雅黑" font size=4>邮箱:</font></p>
-			<input id="typeemail" type="text" placeholder=" 邮箱" />
+			<input id="typeemail" type="text" placeholder=" 请输入邮箱" />
 			<span id="email_error"  style="font-family: '微软雅黑';"></span>
 			
 			<p id="password" ><font face="微软雅黑" font size=4>密码:</font></p>
-			<input id="typepassword"  type="password"  placeholder=" 密码"/>
+			<input id="typepassword"  type="password"  placeholder=" 请输入密码"/>
 			<span id="password_error"  style="font-family: '微软雅黑';"></span>
 			
 			<p id="re_password" class="password"><font face="微软雅黑" font size=4>重复密码:</font></p>
-			<input id="re_typepassword" class="typepassword" type="password"  placeholder=" 密码"/>
+			<input id="re_typepassword" class="typepassword" type="password"  placeholder=" 请重复密码"/>
 			<span id="repassword_error"  style="font-family: '微软雅黑';"></span>
 			
 			<p id="username"><font face="微软雅黑" font size=4>昵称:</font></p>
-			<input id="typename" type="text" placeholder=" 昵称" />
+			<input id="typename" type="text" placeholder=" 请输入昵称" />
 			<span id="username_error"  style="font-family: '微软雅黑';"></span>
 			<button class="btn btn-success" id="submit_load">登陆</button>
 			<button class="btn btn-danger" id="sign_in">注册</button>

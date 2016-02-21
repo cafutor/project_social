@@ -1,0 +1,12 @@
+body{
+	background-color: #F6F9F9;
+}
+.regbox{
+	width: 800px;
+	height: 400px;
+	background-color:#22F5EE;
+	position: absolute;
+	left: calc(50% - 400px);
+	top: calc(50% - 250px);
+	border-radius: 10px;
+}

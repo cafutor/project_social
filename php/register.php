@@ -4,17 +4,6 @@
 		die("failed to connect database".mysql_error());
 	}
 	mysql_select_db("htsocialjob",$con);
-//fetch username
-//	$sql_fetch_username="SELECT * FROM htsocialjob Where XType='U' ORDER BY Name ";
-//	$result_username=mysql_query($sql_fetch_username,$con);
-//  $num_username=mysql_num_rows($result_username);
-//	$array_name=array();
-//	$a=0;
-//	while ($a <$num_username) {
-//		$a++;
-//		array_push($array_name,mysql_fetch_row($result_username));
-//	}
-//	echo json_encode($array_name);
 	date_default_timezone_set("Asia/Shanghai");
 	$time=date("YmdHis");
 	$timestamp=time();
@@ -23,9 +12,9 @@
 	$email=$_POST['useremail'];
 	$name=$_POST['username'];
 	$token=md5(trim($password.$email.$time));
-	$sql_user_info="CREATE TABLE htsocialjob.".$name." ( usermail TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , userpassword TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , user_active_status  TINYINT(3) NOT NULL , user_head_photo TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , user_msg TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , follow_num INT(50) NOT NULL , time_when_send INT(50) NOT NULL,time_when_reg TINYTEXT NOT NULL,token TINYTEXT NOT NULL,userexpirence TINYTEXT NOT NULL) ENGINE = InnoDB;";
+	$sql_user_info="CREATE TABLE htsocialjob.".$name." ( usermail TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,username TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, userpassword TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , user_active_status  TINYINT(3) NOT NULL , user_head_photo TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , user_msg TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , follow_num INT(50) NOT NULL , time_when_send INT(50) NOT NULL,time_when_reg TINYTEXT NOT NULL,token TINYTEXT NOT NULL,userexpirence TINYTEXT NOT NULL) ENGINE = InnoDB;";
 	$sql_result=mysql_query($sql_user_info,$con);
-	$sqlquery="INSERT INTO ".$name." (usermail,userpassword,time_when_reg,token)VALUES('$email','$password','$time','$token')";
+	$sqlquery="INSERT INTO ".$name." (usermail,username,userpassword,time_when_reg,token)VALUES('$email','$name','$password','$time','$token')";
 	if($sql_result){
 		mysql_query($sqlquery,$con);
 	}

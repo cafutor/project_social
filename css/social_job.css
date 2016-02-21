@@ -85,8 +85,6 @@ body{
         width: 34px;
         right:0;
         top:0;
-        opacity: 0;
-        filter:alpha(opacity=0);
     }
 
 #submit_msg p{
@@ -94,7 +92,7 @@ body{
 	left: 200px;
 	top: 10px;
 }
-#jiayou_img{
+#title_img{
 	background: url(../img/jiayou.png)no-repeat center;
 	width: 234px;
 	height: 36px;
@@ -278,7 +276,7 @@ body{
 }
 #checknumber_error{
 	position: absolute;
-	top: 220px;
+	top: 240px;
 	left: 415px;
 }
 #in_checknumber{
@@ -301,7 +299,7 @@ body{
 	line-height: 16px;
 	left:420px ;
 	top: 90px;
-	color: red;
+	color: #E11212;
 	font-family: "微软雅黑";
 	font-size: 15px;
 	cursor: pointer;
@@ -334,14 +332,15 @@ body{
 	top: 135px;
 }
 #bg{
-	background: url(../img/毛玻璃.jpg)no-repeat cover;
+	/*background: url(../img/毛玻璃.jpg)no-repeat cover;*/
 	position: absolute;
 	left: 0px;
 	top: 0px;
 	width: 100%;
 	height: 100%;
 	background-color: #989898;
-	z-index: -1;
+	/*z-index: -1;*/
+	display: none;
 	opacity: 0;
 	/*transition: all 0.1s ease;*/
 }
