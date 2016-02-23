@@ -8,7 +8,11 @@ function getData () {
 		success:function(data,stutas){
 			var jsondata=eval(decodeURI(data));
 			var jsonnum=jsondata.length;
-			function setGetData () {
+			if (jsondata[jsonnum-1]===localStorage.user_name) {
+				document.getElementById("unload").style.display="none";
+				document.getElementById("submit_msg").style.display="block";
+			}
+			function setGetData (inum) {
 		var c = 0;
 	    
 //	    var time=new Date();
@@ -37,7 +41,7 @@ function getData () {
 		femaleIdHeader.innerHTML='昵称:';
 		femaleWorkingExperienceHeader.innerHTML='经验:';
 		femaleId.innerHTML=msg_data.data[1].femaleid;
-	    femaleWorkingExperience.innerHTML=msg_data.data[3].femaleWorkingexperience;
+	    femaleWorkingExperience.innerHTML=msg_data.data[2].femaleWorkingexperience;
 		
 		user_msg_sended.appendChild(container);
 		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;;transition: all 0.3s ease;position: absolute;';
@@ -45,7 +49,7 @@ function getData () {
 		//女性标志div
 		container.appendChild(femaleDiv);
 		femaleDiv.appendChild(femaleImg);
-		femaleImg.src="img/"+msg_data.data[2].src;
+		femaleImg.src="http://127.0.0.1:8081/social_job/img/female.png";
 	//昵称和工作经验
 	   container.appendChild(femaleIdHeader);
 	   container.appendChild(femaleWorkingExperienceHeader);
@@ -60,7 +64,7 @@ function getData () {
 		personal_writed_msg.innerHTML = jsondata[inum]
 		personal_writed_msg.style.cssText = "position: absolute;left: 0px;font-family: 微软雅黑;size: a3;padding: 3px;text-indent: 2em;word-break: break-all;";
 		var img = document.createElement('img');
-		img.src = "img/" + msg_data.data[0].src;
+		img.src = "http://localhost:8081/social_job/img/touxiang1.jpeg";
 		img.style.cssText = 'width: 150px;height:141px;';
 		personal_1_pic_div.appendChild(img);
 		//点赞
@@ -149,9 +153,10 @@ function getData () {
 		discussInPutsVal();
 		
 		//设置评论按钮功能
-		function discussSedBtn () {
-			
-		}
+//		function discussSedBtn () {
+//			
+//		}
+
 		
 		//点击评论按钮
 		for (var n = 0; n < discussLen; n++) {
@@ -190,19 +195,75 @@ function getData () {
     var num_count_0 = document.getElementById('num');
     num_count_0.innerHTML="还能输入"+ parseInt(200)+'个字符';
 			}
-			for (var inum=0;inum<jsonnum-1;inum++) {
-				setGetData ();
+			for (var inum=0;inum<jsonnum-2;inum++) {
+				setGetData (inum);
 			}
 		}
 	});
 }
 getData ();
-	//获取textarea中的value
+var submit_btn_user=document.getElementById("submit_load_data");
+if (document.addEventListener) {
+	 submit_btn_user.addEventListener("click",submit_get_user_info,false)
+} else if(document.attachEvent){
+	 submit_btn_user.attachEvent("onclick",submit_get_user_info)
+}else{
+	 submit_btn_user.onclick = submit_get_user_info;
+}
+//登陆获取数据
+function submit_get_user_info () {
+	var user_email=document.getElementById("typeemail").value;
+	var user_password=document.getElementById("typepassword").value;
+	$.ajax({
+	type:"post",
+	url:"php/matchuserinfo.php",
+	async:true,
+	dataType:"html",
+	data:{"user_submit_email":user_email,"user_submit_password":user_password},
+	success:function(data,status){
+	var userinfo=eval(decodeURI(data));
+	console.log(userinfo);
+if (parseInt(userinfo[0])===0) {
+	document.getElementById("check_status").style.display="block";
+	document.getElementById("check_status").innerHTML="邮箱或密码不正确或不能为空";
+} else if(parseInt(userinfo[3])===1){
+	document.getElementById("bg").style.display="none";
+	 var array_element=[document.getElementById("submit_msg"),document.getElementById("banner"),document.getElementById("user-sended-msg")];
+	document.getElementById("unload").style.display="none";
+		function setSign_later() {
+			document.getElementById("signin").style.display="none";
+			document.getElementById("signin").style.opacity = 0;
+            for (var i=0;i<array_element.length;i++) {
+					array_element[i].style.filter="blur(0px)";
+					array_element[i].style.webkitFilter="blur(0px)";
+					array_element[i].style.mozFilter="blur(0px)";
+				}
+			document.getElementById("book_png_1").style.zIndex = 0;
+			 document.body.style.overflowY = 'visible';
+			document.body.onmousewheel = function() {
+				return true;
+			}
+		}
+	 setSign_later();
+	document.getElementById("check_status").style.display="none";
+	document.getElementById("check_status").innerHTML="";
+localStorage.user_photo=userinfo[0];
+localStorage.user_expirence=userinfo[1];
+localStorage.user_name=userinfo[2];
+document.getElementById("submit_msg").style.display="block";	
+//window.location.href=""
+}
+}
+});
+}
+		//获取textarea中的value
 	var write_msg_1 = document.getElementById('write_msg');
 	var sed_button_1 = document.getElementById('sed_button');
 	var user_msg_sended = document.getElementById('user-sended-msg');
+    
 	//json字符串
-	var msg_data = {"data": [{"src": "touxiang1.jpeg"}, {"femaleid": "angelSweety"},{"src":"female.png"},{"femaleWorkingexperience":"两年文案，如果看重我的才华那就给我推荐工作吧。"}]}
+	var msg_data = {"data": [{"src": localStorage.user_photo}, {"femaleid": localStorage.user_name},{"femaleWorkingexperience":localStorage.user_expirence}]};
+	document.getElementById("personal_img").style.background= "url("+localStorage.user_photo+")";
 		//创建元素的前插函数
 	function insertbefore(parent, newChild) {
 		if (parent.firstChild) {
@@ -227,7 +288,7 @@ function setClick () {
 		   type: "POST",
 		   url: "php/submit.php",
 		   //data: submitData,
-		   data:{"saytxt":write_msg_value},
+		   data:{"user_msg":write_msg_value,"username":msg_data.data[1].femaleid},
 		   dataType: "html",
 		   success:function(data,status){
 		   	console.log(data);
@@ -241,9 +302,9 @@ function setClick () {
 			document.getElementById('sed_button').style.zIndex = -1;
 			return document.getElementById('write_msg').value = "";
 		};
-	    //得到时间对象的实例
-	    var time=new Date();
-	    var otime=time.getUTCFullYear()+'年'+time.getUTCMonth()+'月'+time.getUTCDay();
+	    //实例化时间对象
+//	    var time=new Date();
+//	    var otime=time.getUTCFullYear()+'年'+time.getUTCMonth()+'月'+time.getUTCDay();
 	    
 		//得到信息呈现区的所用div对象
 		var container = document.createElement('div');
@@ -269,7 +330,7 @@ function setClick () {
 		femaleIdHeader.innerHTML='昵称:';
 		femaleWorkingExperienceHeader.innerHTML='经验:';
 		femaleId.innerHTML=msg_data.data[1].femaleid;
-	    femaleWorkingExperience.innerHTML=msg_data.data[3].femaleWorkingexperience;
+	    femaleWorkingExperience.innerHTML=msg_data.data[2].femaleWorkingexperience;
 		
 		user_msg_sended.appendChild(container);
 		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;transition: all 0.3s ease;position: absolute;';
@@ -277,7 +338,7 @@ function setClick () {
 		//女性标志div
 		container.appendChild(femaleDiv);
 		femaleDiv.appendChild(femaleImg);
-		femaleImg.src="img/"+msg_data.data[2].src;
+		femaleImg.src="http://127.0.0.1:8081/social_job/img/female.png";
 	//昵称和工作经验
 	   container.appendChild(femaleIdHeader);
 	   container.appendChild(femaleWorkingExperienceHeader);
@@ -291,7 +352,7 @@ function setClick () {
 		personal_writed_msg.innerHTML = write_msg_value;
 		personal_writed_msg.style.cssText = "position: absolute;left: 0px;font-family: 微软雅黑;size: a3;padding: 3px;text-indent: 2em;word-break: break-all;";
 		var img = document.createElement('img');
-		img.src = "img/" + msg_data.data[0].src;
+		img.src = msg_data.data[0].src;
 		img.style.cssText = 'width: 150px;height:141px;';
 		personal_1_pic_div.appendChild(img);
 		//点赞
@@ -426,12 +487,14 @@ function setClick () {
 
 if (document.addEventListener) {
 	sed_button_1.addEventListener("click",setClick,false)
-} else if(window.attachEvent){
+} else if(document.attachEvent){
 	sed_button_1.attachEvent("onclick",setClick)
 }else{
 	sed_button_1.onclick = setClick;
 }
+    
 }
+
 //设置微博区域的功能
 function set_write_msg() {
 	//创建一个匹配中文并获取对象字符串的函数
@@ -497,7 +560,7 @@ function set_sig_reg() {
 	var user_msg_sended=document.getElementById("user-sended-msg");
 	var array_element=[banner,submit_msg,user_msg_sended];
 	 function set_page_background() {
-			if (sig== true) {
+
 				signin_box.style.display="block";
 				signin_box.style.opacity = 1;
 				signin_box.style.zIndex = 2;
@@ -513,7 +576,6 @@ function set_sig_reg() {
 				body.onmousewheel = function() {
 					return false;
 				}
-			}
 			 sig=false;
 		}
 	if(document.addEventListener){
@@ -525,7 +587,6 @@ function set_sig_reg() {
 	}
 		//逛一下功能按钮
 	function setSign_later() {
-		if (sig== false) {
 			signin_box.style.display="none";
 			signin_box.style.zIndex = -1;
 			signin_box.style.opacity = 0;
@@ -537,12 +598,10 @@ function set_sig_reg() {
 				}
 			set_bg.style.display = "none";
 			input_img.style.zIndex = 0;
-//			set_bg.style.transition = 'all 0.1s ease';
-			body.style.overflowY = 'visible';
-			body.onmousewheel = function() {
+			document.body.style.overflowY = 'visible';
+			document.body.onmousewheel = function() {
 				return true;
 			}
-		}
 		sig=true;
 	}
 	if(document.addEventListener){
@@ -573,6 +632,7 @@ function set_sig_reg() {
 			img_checknumber.onclick=refresh_check_number;
 		}
 	function getval () {
+		
 		//密码
 		var pasword=document.getElementById("typepassword").value;
 		var error_password=document.getElementById("password_error");
@@ -625,14 +685,22 @@ function set_sig_reg() {
 				dataType:"html",
 				data:{"check_num":inchecknumber},
 				success:function(data){
+					function  refresh_checknumber(){
+			$.ajax({
+				type:"get",
+				url:"php/checknumber.php",
+				async:true
+			});
+			img_checknumber.src="php/checknumber.php";
+		};
+					refresh_checknumber();
 				var num=parseInt(data);
 				if(num===1){
 					error_checknumber.innerHTML="";
-					console.log();
-					}
+				};
 				if(num===0){
-						document.getElementById("checknumber_error").innerHTML=document.getElementById("in_checknumber").value.length>0?"验证码错误":"请输入验证码";
-					}
+					document.getElementById("checknumber_error").innerHTML=document.getElementById("in_checknumber").value.length>0?"验证码错误":"请输入验证码";		
+		}
 				}
 			});
 			var a,b,c;
@@ -734,6 +802,17 @@ function set_sig_reg() {
 		check();
 	}
 	function reg_btn_before () {
+			//check number refresh
+		function  refresh_check_number_btn_before(){
+			$.ajax({
+				type:"get",
+				url:"php/checknumber.php",
+				async:true
+			});
+			img_checknumber.src="php/checknumber.php";
+		}
+		refresh_check_number_btn_before();
+		
 		var sigin=document.getElementById("signin");
 		sigin.style.height="350px";
 		//忘记密码
@@ -754,6 +833,9 @@ function set_sig_reg() {
 		var pchecknumber=document.getElementById("p_checknumber");
 		pchecknumber.style.display="block";
 		var re_typepassword=document.getElementById("re_typepassword");
+		//登陆获取数据按钮
+		var submit_loaddata=document.getElementById("submit_load_data");
+		submit_loaddata.style.display="none";
 			//重复密码
 		var array_btn=[submit_load,sign_in,sign_later,re_password,re_typepassword,user_name,type_name];
 		for (var i=0;i<array_btn.length;i++) {
@@ -797,7 +879,8 @@ var btn_load=document.getElementById("submit_load");
 function setLoad () {
 var re_password=document.getElementById("re_password"), re_typepassword=document.getElementById("re_typepassword"),
 username=document.getElementById("username"), type_name=document.getElementById("typename"),checknumber=document.getElementById("checknumber"),
-pchecknumber=document.getElementById("p_checknumber"),regbtn_before=document.getElementById("sign_in_1");
+pchecknumber=document.getElementById("p_checknumber"),regbtn_before=document.getElementById("sign_in_1"),submit_loaddata=document.getElementById("submit_load_data");
+		submit_loaddata.style.display="block";
 		regbtn_before.style.display="block";
 		pchecknumber.style.display="none";
 		checknumber.style.display="none";

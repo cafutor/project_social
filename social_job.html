@@ -17,7 +17,7 @@
 		<div id="banner">
 			<div id="banner_ul">
 				<ul id="liebiao">
-					<li><a href="#"><b><font size="5">首页</font></b></a></li>
+					<li><a href="http://localhost:8081/social_job/social_job.html"><b><font size="5">首页</font></b></a></li>
 					<li><a href="#"><font size="4">技能学习</font></a></li>
 					<li><a href="#"><font size="4">职场经验</font></a></li>
 					<li><a href="#"><font size="4">面筋</font></a></li>
@@ -25,6 +25,11 @@
 				<img id="book_png_1" src="img/book.png" title="" />
 			</div>
 		</div>
+		<!--无登陆状态显示-->
+		<div id="unload">
+			
+		</div>
+		<!-- 登陆状态显示-->
 		<div id="submit_msg">
 			<div id="count"><font face="微软雅黑" font size="4"><span id="out_word"></span><span id="num">200</spn><span id="num_af">个字符</span></font></div>
 			<div id="title_img">
@@ -42,14 +47,14 @@
 			<div id="personal_img">
 			</div>
 		</div>
-		<div id="">
-			
-		</div>
+
 		<div id="user-sended-msg">
 		</div>
+		<!--蒙板-->
        <div id="bg">
        </div>
 		<div id="signin">
+		   <span id="check_status"></span>
 			<p id="email"><font face="微软雅黑" font size=4>邮箱:</font></p>
 			<input id="typeemail" type="text" placeholder=" 请输入邮箱" />
 			<span id="email_error"  style="font-family: '微软雅黑';"></span>
@@ -66,6 +71,7 @@
 			<input id="typename" type="text" placeholder=" 请输入昵称" />
 			<span id="username_error"  style="font-family: '微软雅黑';"></span>
 			<button class="btn btn-success" id="submit_load">登陆</button>
+			<button class="btn btn-success" id="submit_load_data">登陆</button>
 			<button class="btn btn-danger" id="sign_in">注册</button>
 			<button class="btn btn-danger" id="sign_in_1">注册</button>
 			<button class="btn btn-warning" id="sign_later">逛一下</button>
