@@ -499,7 +499,6 @@ if (document.addEventListener) {
 function set_write_msg() {
 	//创建一个匹配中文并获取对象字符串的函数
 	function get_length(str) {
-		//return的作用是结束函数并return出去一个值或者对象或者方法？
 		return str.replace(/[^x00-xff]/g, "xx").length;
 	}
 	
