@@ -3,21 +3,20 @@ function sed_personal_div() {
 function getData () {
 	$.ajax({
 		type:"post",
-		url:"php/getdata.php",
+		url:"php/get_data_max.php",
 		async:true,
 		success:function(data,stutas){
-			var jsondata=eval(decodeURI(data));
-			var jsonnum=jsondata.length;
-			if (jsondata[jsonnum-1]===localStorage.user_name) {
+			var dataarray=eval(decodeURI(data));
+			dataarray.sort(function(x,y){return parseInt(x[1])-parseInt(y[1])});
+			var jsonnum=dataarray.length;
+           //如果用户退出，清除所有localstorage
+			if (localStorage.user_name) {
 				document.getElementById("unload").style.display="none";
 				document.getElementById("submit_msg").style.display="block";
 			}
-			function setGetData (inum) {
+			var data_sort=dataarray;
+		function setGetData (inum) {
 		var c = 0;
-	    
-//	    var time=new Date();
-//	    var otime=time.getUTCFullYear()+'年'+time.getUTCMonth()+1+'月'+time.getUTCDay();
-		//得到信息呈现区的所用div对象
 		var container = document.createElement('div');
 		var personal_1_pic_div = document.createElement('div');
 		var personal_writed_msg_div = document.createElement('div');
@@ -40,16 +39,21 @@ function getData () {
 		femaleWorkingExperience.style.cssText="width:120px; position: absolute;left: 230px;top: 50px;font-size: 2;font-family: 微软雅黑;color: #846974;"
 		femaleIdHeader.innerHTML='昵称:';
 		femaleWorkingExperienceHeader.innerHTML='经验:';
-		femaleId.innerHTML=msg_data.data[1].femaleid;
-	    femaleWorkingExperience.innerHTML=msg_data.data[2].femaleWorkingexperience;
+		femaleId.innerHTML=data_sort[inum][3];
+	    femaleWorkingExperience.innerHTML=data_sort[inum][4][1];
 		
 		user_msg_sended.appendChild(container);
 		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;;transition: all 0.3s ease;position: absolute;';
+		//时间
+		var time_p=document.createElement("p");
+		time_p.style.cssText="color: black;position: absolute;left:720px ;top: 110px;";
+		container.appendChild(time_p);
+		time_p.innerHTML=data_sort[inum][4][2];
 		container.appendChild(personal_1_pic_div);
 		//女性标志div
 		container.appendChild(femaleDiv);
 		femaleDiv.appendChild(femaleImg);
-		femaleImg.src="http://127.0.0.1:8081/social_job/img/female.png";
+		femaleImg.src="http://127.0.0.1:443/social_job/img/female.png";
 	//昵称和工作经验
 	   container.appendChild(femaleIdHeader);
 	   container.appendChild(femaleWorkingExperienceHeader);
@@ -61,10 +65,10 @@ function getData () {
 		personal_writed_msg_div.style.cssText = "width: 450px;height: 100px;position: relative;background-color:;left: 518px;top: -135px;"
 		personal_writed_msg_div.appendChild(personal_writed_msg);
 		//信息呈现区文字
-		personal_writed_msg.innerHTML = jsondata[inum]
+		personal_writed_msg.innerHTML = data_sort[inum][0]
 		personal_writed_msg.style.cssText = "position: absolute;left: 0px;font-family: 微软雅黑;size: a3;padding: 3px;text-indent: 2em;word-break: break-all;";
 		var img = document.createElement('img');
-		img.src = "http://localhost:8081/social_job/img/touxiang1.jpeg";
+		img.src = data_sort[inum][4][0];
 		img.style.cssText = 'width: 150px;height:141px;';
 		personal_1_pic_div.appendChild(img);
 		//点赞
@@ -99,17 +103,35 @@ function getData () {
 		var spanLen = spanNum.length;
 		var M = [];
 		for (var m = 0; m < spanLen; m++) {
+			spanNum[m].innerHTML = data_sort[spanLen-m-1][2];
 			M[m] = 1; //循环放入数组的方式
 			(function(q) {
 				fllow[q].onclick = function() {
+					if(!localStorage.user_name){
+						alert("请先登录，亲");
+					}else{
+					var follow_num_upload;
 					M[q]++;
 					if (M[q] % 2 == 0) {
-						spanNum[q].innerHTML = 1;
+						 follownum= 1+parseInt(data_sort[spanLen-q-1][2]);
+						spanNum[q].innerHTML = follownum;
 					} else if (M[q] % 2 != 0) {
-						spanNum[q].innerHTML = '' ;
+						spanNum[q].innerHTML = parseInt(data_sort[spanLen-q-1][0]);
 						M[q] = 1;
+						follownum=parseInt(data_sort[spanLen-q-1][2]);
 					} else {}
-
+//						console.log(data_sort[spanLen-q-1][0],follownum,localStorage.user_name);
+						$.ajax({
+						type:"post",
+						url:"php/updatefollownum.php",
+						async:true,
+						data:{"follow_num_send":follownum,"follow_user_name":localStorage.user_name,"target_name":data_sort[spanLen-q-1][0],"time_when_send":data_sort[spanLen-q-1][3][1]},
+						success:function(data){
+							console.log(data);
+						}
+					});
+					}
+		
 				}
 			})(m)
 
@@ -162,8 +184,10 @@ function getData () {
 		for (var n = 0; n < discussLen; n++) {
 			(function(discussNum) {
 				discuss[discussNum].onclick = function() {
+					if (!localStorage.user_name) {
+					alert("请先登录，亲！");
+					}else{
 				discussAreaDivs[discussNum].style.height = 90 + 'px';
-				
 				for (var i = 0; i < discussAreaDivs.length; i++) {
 						if (i != discussNum) {
 							discussAreaDivs[i].style.height = 0 + 'px';
@@ -181,6 +205,7 @@ function getData () {
 						}
 					}
 				}
+					}
 			})(n);
 		}
 		//点击发送按钮时所有评论区关闭
@@ -188,20 +213,20 @@ function getData () {
 			discussAreaDivs[a].style.height = 0 + 'px';
 		}
 		//点击按钮用户所发送信息的呈现区域height就增加
-		user_msg_sended.style.height = 20 * (arraydiv.length+ 1)+ arraydiv.length * 146 + 200 + 'px';
+		user_msg_sended.style.height = 20 * (arraydiv.length+1)+ arraydiv.length * 146 +200+ 'px';
 		for (var j = 0; j < arraydiv.length; j++) {
 			arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 'px';
 		}
     var num_count_0 = document.getElementById('num');
     num_count_0.innerHTML="还能输入"+ parseInt(200)+'个字符';
 			}
-			for (var inum=0;inum<jsonnum-2;inum++) {
+			for (var inum=0;inum<jsonnum;inum++) {
 				setGetData (inum);
 			}
 		}
 	});
 }
-getData ();
+setTimeout(function (){getData()},200)
 var submit_btn_user=document.getElementById("submit_load_data");
 if (document.addEventListener) {
 	 submit_btn_user.addEventListener("click",submit_get_user_info,false)
@@ -222,12 +247,13 @@ function submit_get_user_info () {
 	data:{"user_submit_email":user_email,"user_submit_password":user_password},
 	success:function(data,status){
 	var userinfo=eval(decodeURI(data));
-	console.log(userinfo);
 if (parseInt(userinfo[0])===0) {
 	document.getElementById("check_status").style.display="block";
 	document.getElementById("check_status").innerHTML="邮箱或密码不正确或不能为空";
-} else if(parseInt(userinfo[3])===1){
-	document.getElementById("bg").style.display="none";
+} ;
+if(parseInt(userinfo[3])===1){
+	 document.getElementById("background_blur").style.display="none";
+	 console.log(parseInt(userinfo[3]));
 	 var array_element=[document.getElementById("submit_msg"),document.getElementById("banner"),document.getElementById("user-sended-msg")];
 	document.getElementById("unload").style.display="none";
 		function setSign_later() {
@@ -238,7 +264,7 @@ if (parseInt(userinfo[0])===0) {
 					array_element[i].style.webkitFilter="blur(0px)";
 					array_element[i].style.mozFilter="blur(0px)";
 				}
-			document.getElementById("book_png_1").style.zIndex = 0;
+			document.getElementById("book_png_1").style.zIndex = -999999;
 			 document.body.style.overflowY = 'visible';
 			document.body.onmousewheel = function() {
 				return true;
@@ -251,10 +277,18 @@ localStorage.user_photo=userinfo[0];
 localStorage.user_expirence=userinfo[1];
 localStorage.user_name=userinfo[2];
 document.getElementById("submit_msg").style.display="block";	
-//window.location.href=""
+document.getElementById("typeemail").innerHTML="";
+document.getElementById("typepassword").innerHTML=""
+//getData();
+window.location.href="";
 }
 }
 });
+}
+if(localStorage.user_name){
+document.getElementById("book_png_1").style.opacity=0;
+document.getElementById("book_png_1").style.display="none";
+document.getElementById("btn_siginout").style.display="block";;
 }
 		//获取textarea中的value
 	var write_msg_1 = document.getElementById('write_msg');
@@ -263,7 +297,9 @@ document.getElementById("submit_msg").style.display="block";
     
 	//json字符串
 	var msg_data = {"data": [{"src": localStorage.user_photo}, {"femaleid": localStorage.user_name},{"femaleWorkingexperience":localStorage.user_expirence}]};
+	setTimeout(function(){
 	document.getElementById("personal_img").style.background= "url("+localStorage.user_photo+")";
+	},100);
 		//创建元素的前插函数
 	function insertbefore(parent, newChild) {
 		if (parent.firstChild) {
@@ -287,7 +323,6 @@ function setClick () {
          	$.ajax({
 		   type: "POST",
 		   url: "php/submit.php",
-		   //data: submitData,
 		   data:{"user_msg":write_msg_value,"username":msg_data.data[1].femaleid},
 		   dataType: "html",
 		   success:function(data,status){
@@ -331,14 +366,18 @@ function setClick () {
 		femaleWorkingExperienceHeader.innerHTML='经验:';
 		femaleId.innerHTML=msg_data.data[1].femaleid;
 	    femaleWorkingExperience.innerHTML=msg_data.data[2].femaleWorkingexperience;
-		
+	    //时间
+		var time_p=document.createElement("p");
+		time_p.style.cssText="color: black;position: absolute;left:720px ;top: 110px;";
+		container.appendChild(time_p);
+		time_p.innerHTML="刚刚";
 		user_msg_sended.appendChild(container);
 		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;transition: all 0.3s ease;position: absolute;';
 		container.appendChild(personal_1_pic_div);
 		//女性标志div
 		container.appendChild(femaleDiv);
 		femaleDiv.appendChild(femaleImg);
-		femaleImg.src="http://127.0.0.1:8081/social_job/img/female.png";
+		femaleImg.src="http://127.0.0.1:443/social_job/img/female.png";
 	//昵称和工作经验
 	   container.appendChild(femaleIdHeader);
 	   container.appendChild(femaleWorkingExperienceHeader);
@@ -416,7 +455,7 @@ function setClick () {
 		discussSedbtn.innerHTML='发送';
 		discussSedbtn.style.cssText="position: absolute;left: 910px;bottom:10px ;font-family: 微软雅黑; vertical-align: middle;";
 		disscussInput.style.cssText="width: 800px;height: 50px;position: absolute;left: 95px;bottom: 10px;resize: none;";
-		discussArea.style.cssText = "width:990px;height:0px;position:absolute;top:146px;left:5px;;background-color:#c0dff8; transition: all 0.1s ease;overflow: hidden;"
+		discussArea.style.cssText = "width:990px;height:0px;position:absolute;top:146px;left:5px;;background-color:white; transition: all 0.1s ease;overflow: hidden;"
 		var discussAreaDivs = [];
 		for (var i = 0; i < divs.length; i++) {
 			if (divs[i].offsetWidth == 990) {
@@ -475,7 +514,8 @@ function setClick () {
 			discussAreaDivs[a].style.height = 0 + 'px';
 		}
 		//点击按钮用户所发送信息的呈现区域height就增加
-		user_msg_sended.style.height = 20 * (arraydiv.length+ 1)+ arraydiv.length * 146 + 200 + 'px';
+		user_msg_sended.style.height = 20 * (arraydiv.length+1)+ arraydiv.length * 146 +200+ 'px';
+		console.log(arraydiv.length,arraydiv.length);
 		for (var j = 0; j < arraydiv.length; j++) {
 			arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 'px';
 		}
@@ -492,13 +532,24 @@ if (document.addEventListener) {
 }else{
 	sed_button_1.onclick = setClick;
 }
-    
+    //查看更多
+    document.body.onmousewheel=function(e){
+    	console.log(e);
+    	var scrolltop=document.body.scrollTop+document.documentElement.scrollTop;
+    	if (scrolltop>3280) {
+    		document.getElementById("downloaddata").style.opacity=1;
+    		if(e.wheelDeltaY>0){
+    			document.getElementById("downloaddata").style.opacity=0;
+    		}
+    	}
+    }
 }
 
 //设置微博区域的功能
 function set_write_msg() {
 	//创建一个匹配中文并获取对象字符串的函数
 	function get_length(str) {
+		//return的作用是结束函数并return出去一个值或者对象或者方法？
 		return str.replace(/[^x00-xff]/g, "xx").length;
 	}
 	
@@ -548,18 +599,17 @@ function set_sig_reg() {
 	var signin_box = document.getElementById('signin');
 	var input_img = document.getElementById('book_png_1');
 	//背景蒙板
-	var set_bg = document.getElementById('bg');
+	var set_bg = document.getElementById('background_blur');
 	//获得稍后操作作为操作对象
 	//获得body操作对象
 	var body = document.getElementsByTagName('body')[0];
 	var sign_later = document.getElementById('sign_later');
-	var sig=true;
 	var banner=document.getElementById("banner");
 	var submit_msg=document.getElementById("submit_msg");
 	var user_msg_sended=document.getElementById("user-sended-msg");
-	var array_element=[banner,submit_msg,user_msg_sended];
+	var unload=document.getElementById("unload");
+	var array_element=[banner,submit_msg,user_msg_sended,unload];
 	 function set_page_background() {
-
 				signin_box.style.display="block";
 				signin_box.style.opacity = 1;
 				signin_box.style.zIndex = 2;
@@ -575,7 +625,6 @@ function set_sig_reg() {
 				body.onmousewheel = function() {
 					return false;
 				}
-			 sig=false;
 		}
 	if(document.addEventListener){
 	   input_img.addEventListener("click", set_page_background);
@@ -596,12 +645,12 @@ function set_sig_reg() {
 					array_element[i].style.mozFilter="blur(0px)";
 				}
 			set_bg.style.display = "none";
-			input_img.style.zIndex = 0;
+			input_img.style.opacity = 1;
+			input_img.style.display = "block";
 			document.body.style.overflowY = 'visible';
 			document.body.onmousewheel = function() {
 				return true;
 			}
-		sig=true;
 	}
 	if(document.addEventListener){
 		sign_later.addEventListener("click",setSign_later,false);
@@ -928,7 +977,7 @@ function disabled_wheel() {
 	if (document.addEventListener) {
 		document.addEventListener('DOMMouseScroll', scrollFunc, false);
 	} 
-	window.onmousewheel = document.onmousewheel = scrollFunc; //IE/Opera/Chrome/Safari 
+	window.onmousewheel = document.onmousewheel = scrollFunc; 
 };
 window.onload = function() {
 	//用户提交信息呈现
