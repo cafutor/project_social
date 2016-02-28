@@ -6,7 +6,6 @@
 			function setFn(){
 		   localStorage.clear();
 		   window.location.href="social_job.html";
-		   this.btn.style.display="none";
 		   document.getElementById("book_png_1").style.display="block";
 		    document.getElementById("book_png_1").style.opacity=1;
 			}
