@@ -14,7 +14,7 @@
 	$token=md5(trim($password.$email.$time));
 	$sql_user_info="CREATE TABLE htsocialjob.".$name." ( usermail TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,username TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, userpassword TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , user_active_status  TINYINT(3) NOT NULL , user_head_photo TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , user_msg TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , follow_num INT(50) NOT NULL , time_when_send INT(50) NOT NULL,time_when_reg TINYTEXT NOT NULL,token TINYTEXT NOT NULL,userexpirence TINYTEXT NOT NULL ,follow_name TINYTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL) ENGINE = InnoDB;";
 	$sql_result=mysqli_query($con, $sql_user_info);
-	$sqlquery="INSERT INTO ".$name." (usermail,username,userpassword,time_when_reg,token,user_head_photo,userexpirence)VALUES('$email','$name','$password','$time','$token','http://localhost:8081/social_job/img/dafaultphoto.png','新来乍到，多多关照')";
+	$sqlquery="INSERT INTO ".$name." (usermail,username,userpassword,time_when_reg,token,user_head_photo,userexpirence)VALUES('$email','$name','$password','$time','$token','http://localhost:443/social_job/img/dafaultphoto.png','新来乍到，多多关照')";
 	if($sql_result){
 		mysqli_query($con,$sqlquery);
 	}

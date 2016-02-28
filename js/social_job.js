@@ -1,5 +1,5 @@
 function sed_personal_div() {
-	//页面打开就从数据库加载数据
+	//open the first page  then download data frow the database
 function getData () {
 	$.ajax({
 		type:"post",
@@ -15,6 +15,7 @@ function getData () {
 				document.getElementById("submit_msg").style.display="block";
 			}
 			var data_sort=dataarray;
+			console.log(data_sort);
 		function setGetData (inum) {
 		var c = 0;
 		var container = document.createElement('div');
@@ -41,12 +42,15 @@ function getData () {
 		femaleWorkingExperienceHeader.innerHTML='经验:';
 		femaleId.innerHTML=data_sort[inum][3];
 	    femaleWorkingExperience.innerHTML=data_sort[inum][4][1];
-		
+		//messagr container 
 		user_msg_sended.appendChild(container);
-		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;;transition: all 0.3s ease;position: absolute;';
+		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;position: absolute;';
+		if(localStorage.user_name){
+			container.style.transition="all 0.25s ease";
+		}
 		//时间
 		var time_p=document.createElement("p");
-		time_p.style.cssText="color: black;position: absolute;left:720px ;top: 110px;";
+		time_p.style.cssText="color: black;position: absolute;left:720px ;top: 110px;font-size: 10px;";
 		container.appendChild(time_p);
 		time_p.innerHTML=data_sort[inum][4][2];
 		container.appendChild(personal_1_pic_div);
@@ -98,45 +102,61 @@ function getData () {
 				discuss.push(divs[i]);
 			} else {}
 		};
-		//得到点赞输出数字的操作对象
-		var spanNum = user_msg_sended.getElementsByTagName('span'); //点赞功能设置
+		//点赞
+		var spanNum = user_msg_sended.getElementsByTagName('span'); //点赞span
 		var spanLen = spanNum.length;
-		var M = [];
+//		var M = [];
 		for (var m = 0; m < spanLen; m++) {
-			spanNum[m].innerHTML = data_sort[spanLen-m-1][2];
-			M[m] = 1; //循环放入数组的方式
+			if (data_sort[spanLen-m-1][2]===0) {
+				spanNum[m].innerHTML=""
+			} else if(data_sort[spanLen-m-1][2]>0){
+				spanNum[m].innerHTML = data_sort[spanLen-m-1][2];
+			}else{}
+//			M[m] = 1; 
 			(function(q) {
 				fllow[q].onclick = function() {
 					if(!localStorage.user_name){
 						alert("请先登录，亲");
 					}else{
-					var follow_num_upload;
-					M[q]++;
-					if (M[q] % 2 == 0) {
-						 follownum= 1+parseInt(data_sort[spanLen-q-1][2]);
-						spanNum[q].innerHTML = follownum;
-					} else if (M[q] % 2 != 0) {
-						spanNum[q].innerHTML = parseInt(data_sort[spanLen-q-1][0]);
-						M[q] = 1;
-						follownum=parseInt(data_sort[spanLen-q-1][2]);
-					} else {}
-//						console.log(data_sort[spanLen-q-1][0],follownum,localStorage.user_name);
 						$.ajax({
 						type:"post",
 						url:"php/updatefollownum.php",
 						async:true,
-						data:{"follow_num_send":follownum,"follow_user_name":localStorage.user_name,"target_name":data_sort[spanLen-q-1][0],"time_when_send":data_sort[spanLen-q-1][3][1]},
+						data:{"follow_user_name":localStorage.user_name,"target_name":data_sort[spanLen-q-1][3],"time_when_send":data_sort[spanLen-q-1][1]},
 						success:function(data){
-							console.log(data);
+							var data_int=parseInt(data);
+							console.log(data_int);
+							console.log(parseInt(data_sort[spanLen-q-1][2]));
+							var a=parseInt(spanNum[q].innerHTML);
+							if(data_int===0&&data_sort[spanLen-q-1][2]>0){
+								spanNum[q].innerHTML =a+1;
+							}else if(data_int===0&&parseInt(data_sort[spanLen-q-1][2])===0){
+								spanNum[q].innerHTML =parseInt(data_sort[spanLen-q-1][2])+1;
+							}else if(data_int===1){
+						      	spanNum[q].innerHTML =a-1;
+							}else if(data_int===2){
+						     	spanNum[q].innerHTML =a+1;
+							}else{}
 						}
-					});
-					}
+					});	
+//					M[q]++;
 		
+//					if (M[q] % 2 == 0 ) {
+//						 follownum= 1+parseInt(data_sort[spanLen-q-1][2]);
+//						spanNum[q].innerHTML = follownum;
+//					} else if (M[q] % 2 != 0) {
+//						if (parseInt(data_sort[spanLen-q-1][2])===0){
+//							spanNum[q].innerHTML ="";
+//						}else{
+//						spanNum[q].innerHTML = parseInt(data_sort[spanLen-q-1][2]);
+//						}
+//						M[q] = 1;
+//						follownum=parseInt(data_sort[spanLen-q-1][2]);				
 				}
+			}
 			})(m)
-
 		}
-		//设置评论功能区的功能
+		//评论功能
 		var discussLen = discuss.length;
 		var discussArea = document.createElement('div');
 		  //评论输入区
@@ -235,7 +255,7 @@ if (document.addEventListener) {
 }else{
 	 submit_btn_user.onclick = submit_get_user_info;
 }
-//登陆获取数据
+//登陆匹配，获取用户默认头像，工作经验，介绍
 function submit_get_user_info () {
 	var user_email=document.getElementById("typeemail").value;
 	var user_password=document.getElementById("typepassword").value;
@@ -264,7 +284,7 @@ if(parseInt(userinfo[3])===1){
 					array_element[i].style.webkitFilter="blur(0px)";
 					array_element[i].style.mozFilter="blur(0px)";
 				}
-			document.getElementById("book_png_1").style.zIndex = -999999;
+			document.getElementById("book_png_1").style.display = -10;
 			 document.body.style.overflowY = 'visible';
 			document.body.onmousewheel = function() {
 				return true;
@@ -337,10 +357,6 @@ function setClick () {
 			document.getElementById('sed_button').style.zIndex = -1;
 			return document.getElementById('write_msg').value = "";
 		};
-	    //实例化时间对象
-//	    var time=new Date();
-//	    var otime=time.getUTCFullYear()+'年'+time.getUTCMonth()+'月'+time.getUTCDay();
-	    
 		//得到信息呈现区的所用div对象
 		var container = document.createElement('div');
 		var personal_1_pic_div = document.createElement('div');
@@ -368,7 +384,7 @@ function setClick () {
 	    femaleWorkingExperience.innerHTML=msg_data.data[2].femaleWorkingexperience;
 	    //时间
 		var time_p=document.createElement("p");
-		time_p.style.cssText="color: black;position: absolute;left:720px ;top: 110px;";
+		time_p.style.cssText="color: black;position: absolute;left:720px ;top: 110px;font-size: 10px;";
 		container.appendChild(time_p);
 		time_p.innerHTML="刚刚";
 		user_msg_sended.appendChild(container);
@@ -427,7 +443,7 @@ function setClick () {
 		var spanLen = spanNum.length;
 		var M = [];
 		for (var m = 0; m < spanLen; m++) {
-			M[m] = 1; //循环放入数组的方式
+			M[m] = 1; 
 			(function(q) {
 				fllow[q].onclick = function() {
 					M[q]++;
@@ -534,9 +550,8 @@ if (document.addEventListener) {
 }
     //查看更多
     document.body.onmousewheel=function(e){
-    	console.log(e);
     	var scrolltop=document.body.scrollTop+document.documentElement.scrollTop;
-    	if (scrolltop>3280) {
+    	if (scrolltop>3000&&localStorage.user_name) {
     		document.getElementById("downloaddata").style.opacity=1;
     		if(e.wheelDeltaY>0){
     			document.getElementById("downloaddata").style.opacity=0;
@@ -569,8 +584,6 @@ function set_write_msg() {
 		var sed_Message = document.getElementById('sed_message');
 		//当按下按键并放开的时候改变提交按钮的 背景颜色
 		sed_Message.style.backgroundColor = "#c0efd1";
-		/*this 指向当前对象也就是owrite_msg对象，而owrite对象的value（值）就是字符串，
-		在调用get_length函数的时候，owrite的值也就是字符串要进行匹配，如果是中文那就换成两个字符*/
 		var str_length = get_length(this.value);
 		num_count.innerHTML = "还能输入"+ parseInt(200 - str_length)+"个字符";
 		if (str_length == 0) {

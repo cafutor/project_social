@@ -8,7 +8,7 @@
 		   window.location.href="social_job.html";
 		   document.getElementById("btn_siginout").style.display="none";
 		   document.getElementById("book_png_1").style.display="block";
-		   document.getElementById("book_png_1").style.opacity=1;
+		    document.getElementById("book_png_1").style.opacity=1;
 			}
 			if (document.addEventListener) {
 				this.btn.addEventListener("click",setFn,false);

@@ -1,38 +1,64 @@
 <?php 
-//点赞提交
-	session_start();
-	$con=mysqli_connect("127.0.0.1", "root", "", "htsocialjob", 3306);
-	if(!$con){
-		die("failed to connect mysql".mysqli_error());
+//点赞
+class Follownum{
+	static function connect_da(){
+		include("connect.php");
+		return $con;
 	}
-	mysqli_query($con, "SET NAMES 'UTF8'");
-    mysqli_select_db($con,"htsocialjob");
-	$follownum=$_POST['follow_num_send'];
-	$followusername=$_POST['follow_user_name'];
-	$followusername_1=",".$followusername;
+	//获取用户表中每条信息的点赞id
+	static function fetch_follow_id(){
 	$targetname=$_POST['target_name'];
-	$time_when_send=intval($_POST['time_when_send']);
-	$sql="SELECT follow_name FROM ".$targetname." WHERE time_when_send=".$time_when_send."";
-	$sql_0="UPDATE ".$targetname." SET follow_name='$followusername_1' WHERE time_when_send=".$time_when_send."";
-	$sql_2="UPDATE ".$targetname." SET follow_num=follow_num+1 WHERE time_when_send=".$time_when_send."";
-	$sql_4="UPDATE ".$targetname." SET follow_num=follow_num-1 WHERE time_when_send=".$time_when_send."";
-	$sql_1="UPDATE ".$targetname." SET follow_name=concat(follow_name,".$followusername_1.") WHERE time_when_send=".$time_when_send."";
-	$sql_3="UPDATE ".$targetname." SET follow_name=SUBSTRING_INDEX(follow_name,'$followusername_1',1) WHERE time_when_send=".$time_when_send."";
-	$sql_result=mysqli_query($con,$sql);
-	$result_str=mysqli_fetch_row($sql_result)[0];
-	if(empty($result_str)){
-		mysqli_query($con, $sql_0);
-		mysqli_query($con, $sql_2);
+	$time_send=intval($_POST['time_when_send']);
+	$conobj=self::connect_da();
+	 $sql="SELECT follow_name FROM ".$targetname." WHERE time_when_send=".$time_send."";
+	$result=mysqli_query($conobj, $sql);
+	$result_value=mysqli_fetch_row($result)[0];
+	if($result_value===""){
+		return $result_value;
 	}
-			   $array_str=explode(",", $result_str);
-			   $arraystr_num=count($array_str);
-			   	for($i=0;$i<$arraystr_num;$i++){
-			   		if($followusername===$array_str[$i]){
-		                mysqli_query($con, $sql_3);
-						mysqli_query($con,$sql_4);
-			   		}elseif($followusername!==$array_str[$i]){
-			   			mysqli_query($con, $sql_1);
-						mysqli_query($con,$sql_2);
-			   		}
-			   		}  
+	if($result_value!==""){
+		$len_id=strlen($result_value);
+		$sub_id=substr($result_value, 0,$len_id-1);
+		$array_id=explode(",", $sub_id);
+		return $array_id;
+	}
+	}
+
+	//更新点赞数
+	function update_follow_num(){
+		$conobj=self::connect_da();
+		$fetch_num=self::fetch_follow_id();
+		//前端post来的点赞id,点赞目标id
+		$follow_id=$_POST['follow_user_name'];
+		$follow_id_index=$follow_id.",";
+		$targetname=$_POST['target_name'];
+		$time_send=intval($_POST['time_when_send']);
+	   //点赞数自加一
+	   $sql_2="UPDATE ".$targetname." SET follow_num=follow_num+1 WHERE time_when_send=".$time_send."";
+	   //添加点赞用户id
+	   $sql_id="UPDATE ".$targetname." SET follow_name='$follow_id_index' WHERE time_when_send=".$time_send."";
+	    if($fetch_num===""){
+		//点赞数自加一
+		mysqli_query($conobj, $sql_2);
+		//添加点赞id
+		mysqli_query($conobj, $sql_id);
+		echo 0;
+	}
+	if($fetch_num!==""){
+		array_push($fetch_num,$follow_id);
+			//如果点赞id用户已经存在则取消点赞
+			if(array_count_values($fetch_num)[$follow_id]===2){
+				mysqli_query($conobj, "UPDATE ".$targetname." SET follow_name=SUBSTRING_INDEX(follow_name,'$follow_id_index',1) WHERE time_when_send=".$time_send."");
+				mysqli_query($conobj, "UPDATE ".$targetname." SET follow_num=follow_num-1 WHERE time_when_send=".$time_send."");
+				echo 1;
+			}else{
+				mysqli_query($conobj, "UPDATE ".$targetname." SET follow_name=CONCAT(follow_name,'$follow_id_index') WHERE time_when_send=".$time_send."");
+				mysqli_query($conobj, "UPDATE ".$targetname." SET follow_num=follow_num+1 WHERE time_when_send=".$time_send."");
+				echo 2;
+			}
+	}
+	}
+}
+$newfollownum=new Follownum();
+$newfollownum->update_follow_num();
 	?>

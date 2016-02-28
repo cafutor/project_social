@@ -5,9 +5,9 @@
 if(!$con){
 	die("链接数据库失败".mysqli_error());
 }
+mysqli_query($con, "SET NAMES 'UTF8'");
 mysqli_select_db($con,"htsocialjob");
 $sql="SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'htsocialjob'";
-$sql_email="SELECT username From";
 $result=mysqli_query($con,$sql);
 $result_num=mysqli_num_rows($result);
 $num=0;

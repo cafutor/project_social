@@ -24,11 +24,17 @@ body{
 	background-color: black;
 }
 #book_png_1{
-	width: 40px;
-	height: auto;
+	width: 80px;
+	height: 40px;
 	position: absolute;
-	left:210%;
-	cursor: pointer;
+	top: 10px;
+	left:205%;
+	background-color: black;
+	color: white;
+	font-family: "微软雅黑";
+	border-style: none;
+	border-radius: 4px;
+	line-height: 40px;
 }
 #sign_or_register{
 	top: 60px;

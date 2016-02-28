@@ -22,16 +22,46 @@ class Get_data_max{
 		$result=mysqli_query($conobj, $sql);
 		$num=mysqli_num_rows($result);
 		$array_table_names=array();
+		$array_final=array();
 		for($i=0;$i<$num;$i++){
 			array_push($array_table_names,mysqli_fetch_row($result)[0]);
 		}
 		return $array_table_names;
 	}
-	//取得所有表中的，user_msg,time_when_send,follow_num
+	//fetch username follow_name
+	static function fetch_follow_name(){
+		$conobj=self::fetch_con_obj();
+		$all_tables_name=self::get_all_tables();
+		$array_one=array();
+		$array_final=array();
+		//user name 点赞id
+		for($i=0;$i<count($all_tables_name);$i++){
+			$sql_2="SELECT time_when_send,follow_name FROM ".$all_tables_name[$i]." WHERE follow_num>0";
+			$result=mysqli_query($conobj, $sql_2);
+		    $num=mysqli_num_rows($result);
+			$num_1=0;
+			while($num_1<$num){
+				$num_1++;
+				array_push($array_one,mysqli_fetch_row($result));
+				array_push($array_one,$all_tables_name[$i]);
+			}
+		}
+	    $array_one_num=count($array_one);
+          $num_l=-1;
+          while($num_l<$array_one_num-1){
+          	$num_l++;
+			  if($num_l%2===0){
+			  	array_push($array_one[$num_l],$array_one[$num_l+1]);
+				 array_push($array_final,$array_one[$num_l]);
+			  }
+          }			
+	 return $array_final;
+	}
+	//取得所有表中的，user_msg,time_when_send,follow_num,follow_name
    static function fetch_all_info(){
    	$array_tables_name=self::get_all_tables();
    	$conobj=self::fetch_con_obj();
-//	print_r($conobj);
+	$array_follow_info=self::fetch_follow_name();
 	$array_one=array();
 	$array_all=array();
 	for($i=0;$i<count($array_tables_name);$i++){
@@ -86,11 +116,7 @@ class Get_data_max{
 		}elseif($lnum>3600&&$lnum<=7200){
 			array_push($all_info_time_formate[$inum][4],"二小时前");
 		}elseif($lnum>7200&&$lnum<=10800){
-			array_push($all_info_time_formate[$inum][4],"二小时前");
-		}elseif($lnum>10800&&$lnum<86400){
-			array_push($all_info_time_formate[$inum][4],"今天");
-		}elseif($lnum>=86400&&$lnum<172800){
-			array_push($all_info_time_formate[$inum][4],"昨天");
+			array_push($all_info_time_formate[$inum][4],"三小时前");
 		}else{
 			array_push($all_info_time_formate[$inum][4],"$time_day");
 		}
@@ -102,15 +128,20 @@ class Get_data_max{
 		$postnum=self::fetch_post_num();
 		$all_info=self::time_formate();
 		$countnum=count($all_info);
-//		if($countnum<=20){
+		if($countnum<=20){
 			echo json_encode($all_info);
-//		}elseif($countnum>20&&$postnum===0){
-//			echo json_encode(array_slice($all_info,0,21 ));
-//		}elseif($countnum>20&&$postnum>0){
-//			$start_index=$postnum*20;
-//			$end_index=$start_index+20;
-//			echo json_encode(array_slice($all_info, $start_index,$end_index));
-//		}
+		}elseif($countnum>20&&$postnum===0){
+			echo json_encode(array_slice($all_info,$countnum-20,$countnum-1 ));
+		}elseif($countnum>20&&$postnum>0){
+			$start_index=$countnum-20*$postnum;
+			$end_index=$start_index+20;
+			if($start_index>=0){
+				echo json_encode(array_slice($all_info, $start_index,$end_index));
+			}elseif($start_index<0){
+				echo json_encode(array_slice($all_info, 0,$end_index));
+			}
+			
+		}
 	}
 }
 $newObj=new Get_data_max();
