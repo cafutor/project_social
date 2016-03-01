@@ -54,11 +54,9 @@ function getData () {
 		container.appendChild(time_p);
 		time_p.innerHTML=data_sort[inum][4][2];
 		container.appendChild(personal_1_pic_div);
-		//女性标志div
 		container.appendChild(femaleDiv);
 		femaleDiv.appendChild(femaleImg);
 		femaleImg.src="http://127.0.0.1:443/social_job/img/female.png";
-	//昵称和工作经验
 	   container.appendChild(femaleIdHeader);
 	   container.appendChild(femaleWorkingExperienceHeader);
 	   container.appendChild(femaleId);
@@ -68,7 +66,6 @@ function getData () {
 		container.appendChild(personal_writed_msg_div);
 		personal_writed_msg_div.style.cssText = "width: 450px;height: 100px;position: relative;background-color:;left: 518px;top: -135px;"
 		personal_writed_msg_div.appendChild(personal_writed_msg);
-		//信息呈现区文字
 		personal_writed_msg.innerHTML = data_sort[inum][0]
 		personal_writed_msg.style.cssText = "position: absolute;left: 0px;font-family: 微软雅黑;size: a3;padding: 3px;text-indent: 2em;word-break: break-all;";
 		var img = document.createElement('img');
@@ -87,9 +84,7 @@ function getData () {
 		var fllow = [];
 		//评论的所有div
 		var discuss = [];
-		//将前一个主要容器放入后一个主要容器中
 		insertbefore(user_msg_sended, container);
-		//得到信息区域操作的对象 用户发送信息的操作对象 点赞对象 评论对象
 		var divs = user_msg_sended.getElementsByTagName('div');
 		var divs_len = divs.length;
 		var arraydiv = [];
@@ -156,10 +151,8 @@ function getData () {
 			}
 			})(m)
 		}
-		//评论功能
 		var discussLen = discuss.length;
 		var discussArea = document.createElement('div');
-		  //评论输入区
 		var disscussInput=document.createElement('textarea');
 		var discussSedbtn=document.createElement('button');
 		discussArea.appendChild(disscussInput);
@@ -186,21 +179,12 @@ function getData () {
 			}
 
 		}
-		//点击微博发送按钮，评论区恢复清零
 		function  discussInPutsVal() {
 			for (var N=0;N<discussInputsarray.length;N++) {
 				discussInputsarray[N].value = '';
 			}
 		}
 		discussInPutsVal();
-		
-		//设置评论按钮功能
-//		function discussSedBtn () {
-//			
-//		}
-
-		
-		//点击评论按钮
 		for (var n = 0; n < discussLen; n++) {
 			(function(discussNum) {
 				discuss[discussNum].onclick = function() {
@@ -214,7 +198,6 @@ function getData () {
 							discussInputsarray[i].value='';
 						}
 					}
-				//点击不同评论区的评论，呈现不同动画
 					for (var j = 0; j < arraydiv.length; j++) {
 						if (j > discussNum) {
 							arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 90 + 'px';
@@ -228,11 +211,9 @@ function getData () {
 					}
 			})(n);
 		}
-		//点击发送按钮时所有评论区关闭
 		for (var a = 0; a < discussLen; a++) {
 			discussAreaDivs[a].style.height = 0 + 'px';
 		}
-		//点击按钮用户所发送信息的呈现区域height就增加
 		user_msg_sended.style.height = 20 * (arraydiv.length+1)+ arraydiv.length * 146 +200+ 'px';
 		for (var j = 0; j < arraydiv.length; j++) {
 			arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 'px';
@@ -310,17 +291,14 @@ document.getElementById("book_png_1").style.opacity=0;
 document.getElementById("book_png_1").style.display="none";
 document.getElementById("btn_siginout").style.display="block";;
 }
-		//获取textarea中的value
 	var write_msg_1 = document.getElementById('write_msg');
 	var sed_button_1 = document.getElementById('sed_button');
 	var user_msg_sended = document.getElementById('user-sended-msg');
     
-	//json字符串
 	var msg_data = {"data": [{"src": localStorage.user_photo}, {"femaleid": localStorage.user_name},{"femaleWorkingexperience":localStorage.user_expirence}]};
 	setTimeout(function(){
 	document.getElementById("personal_img").style.background= "url("+localStorage.user_photo+")";
 	},100);
-		//创建元素的前插函数
 	function insertbefore(parent, newChild) {
 		if (parent.firstChild) {
 			parent.insertBefore(newChild, parent.firstChild);
@@ -332,13 +310,11 @@ document.getElementById("btn_siginout").style.display="block";;
 
 function setClick () {
 		var c = 0;
-		//得到textarea中的字符串和数字
 		var write_msg_value = (function(){
 			var data_1=write_msg_1.value.toString().replace(/[<]/g,"&lt");
 			return data_1.replace(/[>]/g,"&gt");
 			
 		})(); 
-		//通过ajax来提交textarea中字符串和数字
 		function msg_upload() {
          	$.ajax({
 		   type: "POST",
@@ -351,13 +327,11 @@ function setClick () {
 	    });
 		}
 		msg_upload();
-		//textarea的value提交后变为0按钮背景颜色还原
 		function clearVlaue() {
 			document.getElementById('sed_message').style.backgroundColor = '#eceeee';
 			document.getElementById('sed_button').style.zIndex = -1;
 			return document.getElementById('write_msg').value = "";
 		};
-		//得到信息呈现区的所用div对象
 		var container = document.createElement('div');
 		var personal_1_pic_div = document.createElement('div');
 		var personal_writed_msg_div = document.createElement('div');
@@ -365,11 +339,9 @@ function setClick () {
 		var goodplus = document.createElement('div');
 		var discuss = document.createElement('div');
 		var discussNum = document.createElement('span');
-		//设置女性标志
 		var femaleDiv=document.createElement('div');
 		var femaleImg=document.createElement('img');
 		femaleDiv.style.cssText="width: 15px;height: auto; position: absolute;left: 160px;top: 10px;";
-		//女性昵称工作经验
 		var femaleIdHeader=document.createElement('p');
 		var femaleWorkingExperienceHeader=document.createElement('p');
 		var femaleId=document.createElement('p');
@@ -394,7 +366,6 @@ function setClick () {
 		container.appendChild(femaleDiv);
 		femaleDiv.appendChild(femaleImg);
 		femaleImg.src="http://127.0.0.1:443/social_job/img/female.png";
-	//昵称和工作经验
 	   container.appendChild(femaleIdHeader);
 	   container.appendChild(femaleWorkingExperienceHeader);
 	   container.appendChild(femaleId);
@@ -420,9 +391,8 @@ function setClick () {
 		discuss.style.cssText = "width: 20px;height: 22px; cursor: pointer;background: url(img/discuss.png);position: absolute;left:936px;top:110px ;";
 		//获得点赞的所有对象
 		var fllow = [];
-		//评论的所有div
+		//评论所有div
 		var discuss = [];
-		//将前一个主要容器放入后一个主要容器中
 		insertbefore(user_msg_sended, container);
 		clearVlaue();
 		//得到信息区域操作的对象 用户发送信息的操作对象 点赞对象 评论对象
@@ -438,7 +408,6 @@ function setClick () {
 				discuss.push(divs[i]);
 			} else {}
 		};
-		//得到点赞输出数字的操作对象
 		var spanNum = user_msg_sended.getElementsByTagName('span'); //点赞功能设置
 		var spanLen = spanNum.length;
 		var M = [];
@@ -458,10 +427,8 @@ function setClick () {
 			})(m)
 
 		}
-		//设置评论功能区的功能
 		var discussLen = discuss.length;
 		var discussArea = document.createElement('div');
-		  //评论输入区
 		var disscussInput=document.createElement('textarea');
 		var discussSedbtn=document.createElement('button');
 		discussArea.appendChild(disscussInput);
@@ -487,15 +454,12 @@ function setClick () {
 			}
 
 		}
-		//点击微博发送按钮，评论区恢复清零
 		function  discussInPutsVal() {
 			for (var N=0;N<discussInputsarray.length;N++) {
 				discussInputsarray[N].value = '';
 			}
 		}
 		discussInPutsVal();
-		
-		//设置评论按钮功能
 		function discussSedBtn () {
 			
 		}
@@ -512,7 +476,6 @@ function setClick () {
 							discussInputsarray[i].value='';
 						}
 					}
-				//点击不同评论区的评论，呈现不同动画
 					for (var j = 0; j < arraydiv.length; j++) {
 						if (j > discussNum) {
 							arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 90 + 'px';
@@ -525,11 +488,9 @@ function setClick () {
 				}
 			})(n);
 		}
-		//点击发送按钮时所有评论区关闭
 		for (var a = 0; a < discussLen; a++) {
 			discussAreaDivs[a].style.height = 0 + 'px';
 		}
-		//点击按钮用户所发送信息的呈现区域height就增加
 		user_msg_sended.style.height = 20 * (arraydiv.length+1)+ arraydiv.length * 146 +200+ 'px';
 		console.log(arraydiv.length,arraydiv.length);
 		for (var j = 0; j < arraydiv.length; j++) {
@@ -560,11 +521,8 @@ if (document.addEventListener) {
     }
 }
 
-//设置微博区域的功能
 function set_write_msg() {
-	//创建一个匹配中文并获取对象字符串的函数
 	function get_length(str) {
-		//return的作用是结束函数并return出去一个值或者对象或者方法？
 		return str.replace(/[^x00-xff]/g, "xx").length;
 	}
 	
@@ -611,10 +569,7 @@ function set_sig_reg() {
 	var window_height = window.innerHeight;
 	var signin_box = document.getElementById('signin');
 	var input_img = document.getElementById('book_png_1');
-	//背景蒙板
 	var set_bg = document.getElementById('background_blur');
-	//获得稍后操作作为操作对象
-	//获得body操作对象
 	var body = document.getElementsByTagName('body')[0];
 	var sign_later = document.getElementById('sign_later');
 	var banner=document.getElementById("banner");
@@ -976,7 +931,6 @@ if(document.addEventListener){
 }
 load ();
 }
-//禁用ctrl+滚轮键放大图片
 function disabled_wheel() {
 	var scrollFunc = function(e) {
 		e = e || window.event;
@@ -986,7 +940,6 @@ function disabled_wheel() {
 			event.returnValue = false;
 		}
 	}
-	/*注册事件*/
 	if (document.addEventListener) {
 		document.addEventListener('DOMMouseScroll', scrollFunc, false);
 	} 
