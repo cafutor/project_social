@@ -10,4 +10,5 @@ if(!$con){
 	$txt=$_POST['user_msg'];
 	mysqli_query($con,"INSERT INTO ".$userloadedname."(user_msg,time_when_send)VALUES('$txt','$time_when_send')");
 	mysqli_close($con);
+	echo $time_when_send;
 ?>

@@ -35,7 +35,7 @@ session_start();
     //conserve checknumber
     $_SESSION['checkCode']=$code;
     header("Cache-Control: max-age=1, s-maxage=1, no-cache, must-revalidate");
-    header("Content-type: image/png;charset=gb2312");
+    header("Content-type: image/png;charset=utf8");
     //output image
     imagepng($im);
     //destory image

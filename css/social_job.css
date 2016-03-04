@@ -322,6 +322,13 @@ body{
 	background-color: #E2E4E3;
 	display: none;
 }
+#checknumber>img{
+	width: 120px;
+	height: 40px;
+	position: absolute;
+	left: 0px;
+	cursor:pointer;
+}
 #checknumber_error{
 	position: absolute;
 	top: 240px;
@@ -411,4 +418,3 @@ box-shadow: 0 0 6px lightblue;
 opacity: 0;
 transition: all 0.25s ease-in;
 }
-
