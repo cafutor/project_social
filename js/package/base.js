@@ -39,7 +39,7 @@
 			if(arguments.length<2){
 				throw new Error("method apj two parameters to be needed");
 			}
-			if(!a instanceof Array){
+			if(a instanceof Array===false){
 				throw new Error("arguments[0] must be an Array or an array object");
 				
 			}
