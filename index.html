@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=0.2,minimum-scale=0.3,maximum-scale=0.5,user-scalable=yes" />
+		<title>my socially job</title>
+		<link href="img/favicon.ico" rel="icon" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/social_job.css" />
+		<script src="js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/params.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/social_job.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<!--
+        	作者：huangtao
+        	时间：2015-11-11
+        	描述：首页
+        -->
+		<div id="banner" class="banner">
+			<div id="banner_ul">
+				<ul id="liebiao">
+					<li><a href="http://localhost:443/social_job"><b><font size="5" font color="black" font face="微软雅黑">首页</font></b></a></li>
+					<li><a href="#"><font size="4" font color="#000000" font face="微软雅黑">技能学习</font></a></li>
+					<li><a href="#"><font size="4" font color="#000000" font face="微软雅黑">职场经验</font></a></li>
+					<li><a href="#"><font size="4" font color="#000000" font face="微软雅黑">面筋</font></a></li>
+				</ul>
+			</div>
+			<button id="btn_siginout" class="btn_siginout">退出</button>
+			<button id="book_png_1" >登陆/注册</button>
+		</div>
+		<!--无登陆状态显示-->
+		<div id="unload">
+			<img id="unload_1"  class="unload_1" src="img/unload_1.png"/>
+			<span style="font-family: '微软雅黑';font-size: 20px;">在这里你将遇见同道中人......</span>
+		</div>
+		<!-- 登陆状态显示-->
+		<div id="submit_msg">
+			<div id="count"><font face="微软雅黑" font size="4"><span id="out_word"></span><span id="num">200<span id="num_af">个字符</span></font></div>
+			<div id="title_img">
+			</div>
+			<textarea id="write_msg" name="write_msg" class="input" rows="" cols=""></textarea>
+			<!--
+            	图片上传
+            -->
+			<!--<div id="fileInputContainer" title="添加图片">
+					<input id="fileInput" type="file" name="" title="添加图片" />
+			</div>-->
+				<div id="sed_message" onselectstart="return !1">发送</div>
+				<button class="btn btn-default" id="sed_button">发送</button>
+			<div id="personal_img">
+			</div>
+			<a class="btn btn-default change_info" role="button" id="btn_change">修改个人信息</a>
+		</div>
+
+		<div id="user-sended-msg">
+			<button id="downloaddata" class="btn btn-group-justified" role="button">查看更多</button>
+		</div>
+		<!--蒙板-->
+       <div id="background_blur">
+       </div>
+		<div id="signin">
+		   <span id="check_status"></span>
+			<p id="email"><font face="微软雅黑" font size=4>邮箱:</font></p>
+			<input id="typeemail" type="text" placeholder=" 请输入邮箱" />
+			<span id="email_error"  style="font-family: '微软雅黑';"></span>
+			<p id="password" ><font face="微软雅黑" font size=4>密码:</font></p>
+			<input id="typepassword"  type="password"  placeholder=" 请输入密码"/>
+			<span id="password_error"  style="font-family: '微软雅黑';"></span>
+			<p id="re_password" class="password"><font face="微软雅黑" font size=4>重复密码:</font></p>
+			<input id="re_typepassword" class="typepassword" type="password"  placeholder=" 请重复密码"/>
+			<span id="repassword_error"  style="font-family: '微软雅黑';"></span>
+			<p id="username"><font face="微软雅黑" font size=4>昵称:</font></p>
+			<input id="typename" type="text" placeholder=" 请输入昵称" />
+			<span id="username_error"  style="font-family: '微软雅黑';"></span>
+			<button class="btn btn-success" id="submit_load">登陆</button>
+			<button class="btn btn-success" id="submit_load_data">登陆</button>
+			<button class="btn btn-danger" id="sign_in">注册</button>
+			<button class="btn btn-danger" id="sign_in_1">注册</button>
+			<button class="btn btn-warning" id="sign_later">逛一下</button>
+			<span id="forget_password">忘记密码</span>
+			<!--验证码-->
+		   <p id="p_checknumber"><font face="微软雅黑" font size=4>输入验证码：</font></p>
+		 <div id="checknumber" class="checknumber">
+		 	<img  id="img_checknumber" width="120" height="40" style="position: absolute;left: 0px;cursor: pointer;" src="./php/checknumber.php?" onclick="this.src='php/checknumber.php'+'?'+Math.random()"/>
+		 	<input style="width: 120px;height: 40px;" type="" name="in_checknumber" id="in_checknumber" value="" placeholder="请输入验证码" />
+		 </div>
+		 <span id="checknumber_error" style="color: red;"> </span>
+		</div>
+		<script src="js/btn_unload.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

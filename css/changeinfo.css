@@ -1,0 +1,259 @@
+body{
+	-webkit-overflow-scrolling: touch;
+	margin: 0 auto;
+	overflow-x: hidden;
+	-ms-overflow-x: hidden;
+	height: 1900px;
+}
+@media only screen and (max-width: 1200px) {
+	body{
+		width: 1200px;
+	}
+	.container{
+		width: 100%;
+	}
+	.banner{
+		left: 0px;
+	}
+}
+
+.inline-block-vertical-align{
+	display: inline-block;
+	vertical-align: middle;
+}
+#banner{
+	width: 100%;
+	height: 60px;
+	background-color: #22f5ee;
+	position: absolute;
+	top: 0px;
+}
+#banner_ul{
+  position: absolute;
+  left: 0px;
+  width: 600px;
+  height:60px ;
+  line-height: 60px;
+}
+#liebiao{
+	list-style: none;
+}
+#liebiao li{
+	float: left;
+	margin: auto 30px;
+}
+#liebiao li a{
+	text-decoration: none;
+}
+.change_head_photo{
+	margin-top: 100px;
+	line-height: 260px;
+	text-align: center;
+}
+.head{
+	vertical-align: middle;
+	width: 30%;
+	height: 260px;
+	background-color: lightseagreen;
+	line-height: 260px;
+	text-align: center;
+	border-radius: 5px;
+	display: inline-block;
+}
+.head>img{
+	display: inline;
+	vertical-align: middle;
+	margin-top: -2px;
+}
+.img_display{
+	width: 50%;
+	height: 260px;
+	background-color: red;
+	display: inline-block;
+	vertical-align: middle;
+	border-radius: 5px;
+	line-height: 260px;
+	text-align: center;
+	overflow: hidden;
+}
+.img_display>img{
+	vertical-align: middle;
+	display: inline;
+	margin-top: -2px;
+	transition: all 0.2s ease-in-out;
+}
+.controller{
+	width: 17%;
+	height: 260px;
+	display: inline-block;
+	vertical-align: middle;
+	background-color: #31708F;
+	border-radius: 5px;
+	line-height: 260px;
+}
+.controller>.btn-fn{
+	padding: 10px 0px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.btn-fn>div:nth-child(1){
+	color: white;
+	width: 30px;
+	height: 30px;
+	background-color: lightcoral;
+	border-radius: 100%;
+	margin: 10px auto;
+	line-height: 30px;
+	cursor: pointer;
+	font-size: 20px;
+	overflow: hidden;
+}
+.btn-fn>div:nth-child(2){
+	color: white;
+	width: 30px;
+	height: 30px;
+	background-color: lightseagreen;
+	border-radius: 100%;
+	margin: 10px auto;
+	line-height: 30px;
+	cursor: pointer;
+	font-size: 20px;
+	overflow: hidden;
+}
+.btn-fn>div span{
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: -5px;
+	-moz-user-select: none;
+}
+.btn-fn form{
+	color: white;
+	width: 30px;
+	height: 80px;
+	margin: 10px auto;
+	line-height: 30px;
+	cursor: default;
+	font-size: 1px;
+	overflow: hidden;
+	
+}
+.file_upload{
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	border-radius: 100%;
+	background-color: green;
+	cursor: default;
+	background: url(../img/fileicon.png)no-repeat center;
+	overflow: hidden;
+}
+.file_upload>input{
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+	opacity: 0;
+}
+.submit{
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+	border-style: none;
+	line-height: 30px;
+	font-size: 5px;
+	overflow: hidden;
+	background-color: black;
+	margin-top: -2px;
+	background: url(../img/righticon.png)no-repeat center;
+}
+.submit>input{
+	opacity: 0;
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+}
+.change_info{
+	margin-top: 20px;
+}
+.change_info div{
+	margin: 10px auto;
+}
+.btn-save{
+	font-family: "微软雅黑";
+	font-size: 17px;
+	background-color: #fb2f72;
+	margin-top: 20px;
+	border-style: none;
+}
+.btn-save:hover{
+	background-color: #fa0e5c;
+}
+.change_success{
+	width: 300px;
+	height: 100px;
+	background-color: rgba(0,0,0,0);
+	color: white;
+	font-family: "微软雅黑";
+	position: relative;
+	margin: 0 auto;
+	top: -800px;
+	line-height: 100px;
+	text-align: center;
+	transition: all 0.2s ease-in-out;
+	border-radius: 5px;
+}
+.test-contain{
+	position: relative;
+	display: inline-block;
+    left: 500px;
+    top: -500px;
+    line-height: 20px;
+    color: white;
+    background-color: rgba(0,0,0,0.8);
+    padding: 5px 20px;
+    border-radius: 30px;
+    
+}
+.table-change-border{
+	/*display: inline-block;*/
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	border-top:solid 1px red;
+	width: 100%;
+	border-bottom:solid 1px red;
+	padding: 20px 0;
+	
+}
+.table-change-border th,td{
+	border-style: none;
+	text-align: center;
+	padding: 10px 5px;
+}
+.table-change-border tr:nth-child(2)>td:nth-child(1){
+	word-break: break-all;
+}
+.table-change-border td{
+	width: 7%;
+	word-break: break-all;
+}
+
+
+.sel{
+	border-radius: 5px;
+	box-shadow:-5px 0px 5px #999 inset;
+	padding: 10px 10px 10px 50px;
+	outline: none;
+	
+}
+.sel option{
+	
+	display: inline-block;
+	border: solid 3px red;
+}
+.sel span{
+	display: inline-block;
+	margin: 0 auto;
+}
+
+
+

@@ -52,7 +52,7 @@ class Get_data_max{
           	$num_l++;
 			  if($num_l%2===0){
 			  	array_push($array_one[$num_l],$array_one[$num_l+1]);
-				 array_push($array_final,$array_one[$num_l]);
+				array_push($array_final,$array_one[$num_l]);
 			  }
           }			
 	 return $array_final;
@@ -67,13 +67,13 @@ class Get_data_max{
 	for($i=0;$i<count($array_tables_name);$i++){
 		$sql="SELECT user_msg,time_when_send,follow_num FROM ".$array_tables_name[$i]." WHERE user_active_status=0";
 		//头像，经验
-		$sql_1="SELECT user_head_photo,userexpirence FROM ".$array_tables_name[$i]." WHERE user_active_status=1";
+		$sql_1="SELECT user_head_photo,userexpirence,user_sex FROM ".$array_tables_name[$i]." WHERE user_active_status=1";
 		$result=mysqli_query($conobj,$sql);
 		$result_1=mysqli_query($conobj,$sql_1);
 		$result_row=mysqli_fetch_row($result_1);
 		$info_num=mysqli_num_rows($result);
 		$i_num=0;
-		if($info_num>0){
+		if($info_num>0&&$result_row){
 			while($i_num<$info_num){
 			$i_num++;
 			$array_one_1=mysqli_fetch_row($result);

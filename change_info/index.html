@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>social_job</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=0.2,minimum-scale=0.2,maximum-scale=1,user-scalable=yes" />
+		<link rel="icon" type="image/x-icon" href="../img/favicon.ico"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/changeinfo.css"/>
+		<script src="../js/package/base.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/check/check_user.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+	<div id="banner" class="banner">
+	    <div id="banner_ul">
+				<ul id="liebiao">
+					<li><a href="http://localhost:443/social_job"><b><font size="5" font color="black" font face="微软雅黑">首页</font></b></a></li>
+					<li><a href="#"><font size="4" font color="#000000" font face="微软雅黑">技能学习</font></a></li>
+					<li><a href="#"><font size="4" font color="#000000" font face="微软雅黑">职场经验</font></a></li>
+					<li><a href="#"><font size="4" font color="#000000" font face="微软雅黑">面筋</font></a></li>
+				</ul>	
+	    </div>
+    </div>
+    
+    <div class="container change_head_photo">
+    	<div class="head" id="head">
+    		<img />
+    	</div>
+    	<div class="img_display" id="img_display">
+    		<img src="../img/dafaultphoto.png"/>
+    	</div>
+    	<div class="controller">
+    		<div class="btn-fn">
+    			<div id="btn_scale">
+    				<span >
+    					+
+    				</span>
+    			</div>
+    			<div id="btn_lessen">
+    				<span>
+    					-
+    				</span>
+    			</div>
+    				 <form action="../php/file_upload/file_up_load.php" method="post" enctype="multipart/form-data" class="input-file" id="form_file">
+    				 		<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+    				 	<div class="file_upload" title="选择图片">
+    				 		<input type="file" name="file" id="file_img" accept="image/*" />
+    				 	</div>
+    				 	<div class="submit" title="上传">
+    				 		<input type="button"  id="btn_submit" value="上传" />
+    				 	</div>
+    				 </form>
+    		    </div>
+    	</div>
+    </div>
+    
+    <div class="container change_info">
+        <span id="worning">请用两句话介绍自己，比如：3年行政，希望在这里能得到提升！</span>
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon" >工作经验</span>
+            <input type="text" class="form-control" id="work_expirence" aria-describedby="basic-addon1">
+        </div>
+        <input type="radio" name="sex" class="radio-inline"  id="" value="男" />男
+        <input type="radio" name="sex" class="radio-inline"  id="" value="女" />女
+    	<button class="btn btn-group-justified btn-save" id="btn_save">保存</button>
+    </div>
+    <!--change success-->
+    <div class="change_success" id="change_success">
+    	<span>个人信息修改成功,页面将在</span>
+    	<span id="count"></span>
+    	<span>秒后跳转</span>
+    </div>
+    <div class="container">
+    	<table  class="table-change-border">
+    		<tr>
+    			<th>Header</th>
+    			<th>Header</th>
+    			<th>Header</th>
+    			<th>Header</th>
+    			<th>Header</th>
+    			<th>Header</th>
+    			<th>Header</th>
+    			<th>Header</th>
+    		</tr>
+    		<tr>
+    			<td>杭州时代联合影城，金甲都路路口和你没似的的斗士大</td>
+    			<td>2</td>
+    			<td>3</td>
+    			<td>4</td>
+    			<td>5</td>
+    			<td>6</td>
+    			<td>7</td>
+    			<td>sdadadadadadsadasdsadadsadsadsaddadada</td>
+    		</tr>
+    		<tr>
+    			<td>1</td>
+    			<td>2</td>
+    			<td>3</td>
+    			<td>4</td>
+    			<td>5</td>
+    			<td>6</td>
+    			<td>7</td>
+    			<td>8</td>
+    		</tr>
+    		<tr>
+    			<td>1</td>
+    			<td>2</td>
+    			<td>3</td>
+    			<td>4</td>
+    			<td>5</td>
+    			<td>6</td>
+    			<td>7</td>
+    			<td>8</td>
+    		</tr>
+    	</table>
+    	<select name="sel" id="sels" class="sel">
+        	<option value="1">meiyoushenmemensd</option>
+        	<option value="2">2</option>
+        	<option value="3">3</option>
+        	<option value="4">4</option>
+        </select>
+        <button class="btn btn-default" id="btnsel">xuanze</button>
+    	<input type="checkbox" name="order" id="sex" value="1" />1
+    	<input type="checkbox" name="order" id="sex" value="2" />2
+    	<input type="checkbox" name="order" id="sex" value="3" />3
+    	
+    </div>
+	<script src="../js/changeinfo.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

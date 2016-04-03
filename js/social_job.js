@@ -14,7 +14,7 @@ function getData () {
 				document.getElementById("unload").style.display="none";
 				document.getElementById("submit_msg").style.display="block";
 			}
-			var data_sort=dataarray;
+		var data_sort=dataarray;
 		function setGetData (inum) {
 		var c = 0;
 		var container = document.createElement('div');
@@ -51,12 +51,12 @@ function getData () {
 		var time_p=document.createElement("p");
 		time_p.style.cssText="color: black;position: absolute;left:720px ;top: 110px;font-size: 10px;";
 		container.appendChild(time_p);
-		time_p.innerHTML=data_sort[inum][4][2];
+		time_p.innerHTML=data_sort[inum][4][3];
 		container.appendChild(personal_1_pic_div);
 		//女性标志div
 		container.appendChild(femaleDiv);
 		femaleDiv.appendChild(femaleImg);
-		femaleImg.src="http://127.0.0.1:443/social_job/img/female.png";
+		femaleImg.src=data_sort[inum][4][2];
 	//昵称和工作经验
 	   container.appendChild(femaleIdHeader);
 	   container.appendChild(femaleWorkingExperienceHeader);
@@ -104,14 +104,12 @@ function getData () {
 		//点赞
 		var spanNum = user_msg_sended.getElementsByTagName('span'); //点赞span
 		var spanLen = spanNum.length;
-//		var M = [];
 		for (var m = 0; m < spanLen; m++) {
 			if (data_sort[spanLen-m-1][2]===0) {
 				spanNum[m].innerHTML=""
 			} else if(data_sort[spanLen-m-1][2]>0){
 				spanNum[m].innerHTML = data_sort[spanLen-m-1][2];
 			}else{}
-//			M[m] = 1; 
 			(function(q) {
 				fllow[q].onclick = function() {
 					if(!localStorage.user_name){
@@ -157,7 +155,7 @@ function getData () {
 		container.appendChild(discussArea);
 		discussSedbtn.innerHTML='发送';
 		discussSedbtn.style.cssText="position: absolute;left: 910px;bottom:10px ;font-family: 微软雅黑;background-color: black;color: white;";
-		disscussInput.style.cssText="width: 800px;height: 50px;position: absolute;left: 95px;bottom: 10px;resize: none;";
+		disscussInput.style.cssText="width: 800px;height: 50px;position: absolute;left: 95px;bottom: 2px;resize: none;";
 		discussArea.style.cssText = "width:990px;height:0px;position:absolute;top:146px;left:5px;;background-color:white; transition: all 0.05s ease;overflow: hidden;"
 		var discussAreaDivs = [];
 		var array_btn=[];
@@ -174,7 +172,7 @@ function getData () {
 			}else{
 			}
 		}
-		//点击微博发送按钮，评论区恢复清零
+		//点击微博发送按钮，初始化评论回复区
 		function  discussInPutsVal() {
 			for (var N=0;N<discussInputsarray.length;N++) {
 				discussInputsarray[N].value = '';
@@ -182,39 +180,94 @@ function getData () {
 		}
 		
 		discussInPutsVal();
+		var array_num=[];
 		//点击评论按钮
 		for (var n = 0; n < discussLen; n++) {
+			//添加一个数组
+			array_num.push(0);
 			(function(discussNum) {
 				discuss[discussNum].onclick = function() {
 					if (!localStorage.user_name) {
 					alert("请先登录，亲！");
 					}else{
-				discussAreaDivs[discussNum].style.height = 90 + 'px';
+				var a_data;
+				array_num[discussNum]++;
+				function show_data () {
+				//模拟数据
+				var array_data=[{id:"huangweidong",info:"这是什么玩意儿啊"}
+				,{id:"huangtao",info:"这是模拟的数据"}
+				,{id:"jinyoujiaoer",info:"wokanhaowoziji"}],len=array_data.length;
+				function show_discuss (a) {
+							var div_conent=document.createElement("div"),dd_info=document.createElement("dd");
+							 div_conent.style.cssText="width: 900px;height: 80px;background-color: red;margin: 10px auto;";
+							 dd_info.style.cssText="margin-left: 20px;background-color: white;color: black;display: inline-block;";
+							 discussAreaDivs[discussNum].appendChild(div_conent);
+							 div_conent.appendChild(dd_info);
+							 dd_info.innerHTML=a;
+							 a_data=discussAreaDivs[discussNum].style.height=120+90*len+"px";
+							 A_param.c=len;
+				}
+				for(var i =0;i<len;i++){
+					show_discuss(array_data[i].info)
+				}
+				//初始化
+		        for (var m_num=0;m_num<n;m_num++) {
+	                   	  if(m_num!==discussNum){
+	                   	  array_num[m_num]=0;
+	                   	  remove_data (m_num);
+	                   	  }
+					      }
+				}
+				
+				function remove_data (a_num) {
+					var a=discussAreaDivs[a_num].getElementsByTagName("div").length;
+					for (var i =0;i<a;i++) {
+						discussAreaDivs[a_num].removeChild(discussAreaDivs[a_num].childNodes[discussAreaDivs[a_num].childNodes.length-1]);
+					}
+				}
+				
+				if(1===array_num[discussNum]%2){
+					show_data();
+				}else{
+					remove_data(discussNum);
+				}
+				
 				for (var i = 0; i < discussAreaDivs.length; i++) {
 						if (i != discussNum) {
 							discussAreaDivs[i].style.height = 0 + 'px';
 							discussInputsarray[i].value='';
 						}
 					}				
-				//点击不同评论区的评论，呈现不同动画
+				//点击不同评论区的评论按钮
 					for (var j = 0; j < arraydiv.length; j++) {
 						if (j > discussNum) {
-							if(discussAreaDivs[discussNum].offsetHeight===90){
+							if(discussAreaDivs[discussNum].offsetHeight>=120){
 							arraydiv[j].style.top = 20 * (j +1) + arraydiv[0].offsetHeight * j + 'px';
 							}else{
-							arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 100+ 'px';
+							arraydiv[j].style.top =20 * (j + 1) + arraydiv[0].offsetHeight * j +120+A_param.c*90+ 'px';
 							}	
-						} else if (j == discussNum) {
+						} else if (j === discussNum) {
 							arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 'px';
-							discussAreaDivs[discussNum].style.height=discussAreaDivs[discussNum].offsetHeight===0?90+"px":0+"px";
+							discussAreaDivs[discussNum].style.height=discussAreaDivs[discussNum].offsetHeight===0?a_data+A_param+"px":0+"px";
+							setHeight(discussAreaDivs[discussNum].style.height);
 							//send comment
 							discussAreaDivs[discussNum].getElementsByTagName("button")[0].onclick=function(){
-//							var div_conent=document.createElement("div"),discuss_content=discussAreaDivs[discussNum].getElementsByTagName("textarea")[0].value;
-//							 div_conent.style.cssText="width: 900px;height: 50px;background-color: red;position: absolute;bottom: 50px;left: ;"
-//							 discussAreaDivs[discussNum].style.height=90+50+"px";
-//						send_discuss.innerHTML=discuss_content;
-//							 discussAreaDivs[discussNum].appendChild(div_conent);
-							console.log(discussNum);
+							var div_conent=document.createElement("div"),dd_info=document.createElement("dd");
+							 div_conent.style.cssText="width: 900px;height: 80px;background-color: red;margin: 10px auto;";
+							 dd_info.style.cssText="margin-left: 20px;background-color: green;display: inline-block;"
+							 discussAreaDivs[discussNum].appendChild(div_conent);
+							 div_conent.appendChild(dd_info);
+							 dd_info.innerHTML="huangweidong";
+							 //height degrese
+							 var a_num=discussAreaDivs[discussNum].getElementsByTagName("div").length;
+							  discussAreaDivs[discussNum].style.height=120+90*a_num+"px";
+							  A_param.b=120+90*a_num+"px";
+						     for(var j_num=0;j_num<arraydiv.length;j_num++){
+						     	if(j_num>discussNum){
+						     		arraydiv[j_num].style.top= 20 * (j_num + 1) + arraydiv[0].offsetHeight * j_num + 120+90*a_num+ 'px';
+						     	}
+						     }
+							setHeight (discussAreaDivs[discussNum].style.height);
 							}
 						} else if(j<discussNum){
                             arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j  + 'px';
@@ -225,11 +278,18 @@ function getData () {
 			})(n);
 		}
 		//点击发送按钮时所有评论区关闭
-		for (var a = 0; a < discussLen; a++) {
-			discussAreaDivs[a].style.height = 0 + 'px';
+		for (var k_num = 0; k_num < discussLen; k_num++) {
+			discussAreaDivs[k_num].style.height = 0 + 'px';
 		}
 		//点击按钮用户所发送信息的呈现区域height就增加
-		user_msg_sended.style.height = 20 * (arraydiv.length+1)+ arraydiv.length * 146 +200+ 'px';
+	    function setHeight (h_num) {
+	    	if(!arguments[0]){
+	    		user_msg_sended.style.height = 20 * (arraydiv.length+1)+ arraydiv.length * 146 +200+ 'px';
+	    	}else{
+	    		user_msg_sended.style.height = 20 * (arraydiv.length+1)+ arraydiv.length * 146 +200+parseInt(h_num)+'px';
+	    	}
+	    }
+		setHeight ();
 		for (var j = 0; j < arraydiv.length; j++) {
 			arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 'px';
 		}
@@ -263,13 +323,13 @@ function submit_get_user_info () {
 	data:{"user_submit_email":user_email,"user_submit_password":user_password},
 	success:function(data,status){
 	var userinfo=eval(decodeURI(data));
+	console.log(userinfo);
 if (parseInt(userinfo[0])===0) {
 	document.getElementById("check_status").style.display="block";
 	document.getElementById("check_status").innerHTML="邮箱或密码不正确或不能为空";
 } ;
-if(parseInt(userinfo[3])===1){
+if(parseInt(userinfo[4])===1){
 	 document.getElementById("background_blur").style.display="none";
-	 console.log(parseInt(userinfo[3]));
 	 var array_element=[document.getElementById("submit_msg"),document.getElementById("banner"),document.getElementById("user-sended-msg")];
 	document.getElementById("unload").style.display="none";
 		function setSign_later() {
@@ -293,26 +353,26 @@ if(parseInt(userinfo[3])===1){
 localStorage.user_photo=userinfo[0];
 localStorage.user_expirence=userinfo[1];
 localStorage.user_name=userinfo[2];
+localStorage.user_sex=userinfo[3];
 document.getElementById("submit_msg").style.display="block";	
 document.getElementById("typeemail").innerHTML="";
-document.getElementById("typepassword").innerHTML=""
-//getData();
-window.location.href="social_job.html";
+document.getElementById("typepassword").innerHTML="";
+window.location.href="";
 }
 }
 });
 }
 if(localStorage.user_name){
 document.getElementById("book_png_1").style.display="none";
-document.getElementById("btn_siginout").style.display="block";;
+document.getElementById("btn_siginout").style.display="inline-block";
 }
 		//获取textarea中的value
 	var write_msg_1 = document.getElementById('write_msg');
 	var sed_button_1 = document.getElementById('sed_button');
 	var user_msg_sended = document.getElementById('user-sended-msg');
     
-	//json字符串
-	var msg_data = {"data": [{"src": localStorage.user_photo}, {"femaleid": localStorage.user_name},{"femaleWorkingexperience":localStorage.user_expirence}]};
+	//json
+	var msg_data = {"data": [{"src": localStorage.user_photo}, {"femaleid": localStorage.user_name},{"femaleWorkingexperience":localStorage.user_expirence},{"userSex":localStorage.user_sex}]};
 	setTimeout(function(){
 	document.getElementById("personal_img").style.background= "url("+localStorage.user_photo+")";
 	},100);
@@ -349,9 +409,9 @@ function setClick () {
 		msg_upload();
 		//textarea的value提交后变为0按钮背景颜色还原
 		function clearVlaue() {
-			document.getElementById('sed_message').style.backgroundColor = '#eceeee';
-			document.getElementById('sed_button').style.zIndex = -1;
-			return document.getElementById('write_msg').value = "";
+			document.getElementById('sed_message').style.display = 'inline-block';
+			document.getElementById('sed_button').style.display = "none";
+			document.getElementById('write_msg').value = "";
 		};
 		//得到信息呈现区的所用div对象
 		var container = document.createElement('div');
@@ -384,13 +444,13 @@ function setClick () {
 		container.appendChild(time_p);
 		time_p.innerHTML="刚刚";
 		user_msg_sended.appendChild(container);
-		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;transition: all 0.3s ease;position: absolute;';
+		container.style.cssText = 'width: 1000px;height: 146px;background:url(img/set_msg_bg.png)no-repeat center;transition: all 0.05s ease;position: absolute;';
 		container.appendChild(personal_1_pic_div);
 		//女性标志div
 		container.appendChild(femaleDiv);
 		femaleDiv.appendChild(femaleImg);
-		femaleImg.src="http://127.0.0.1:443/social_job/img/female.png";
-	//昵称和工作经验
+		femaleImg.src=msg_data.data[3].userSex;
+	   //昵称和工作经验
 	   container.appendChild(femaleIdHeader);
 	   container.appendChild(femaleWorkingExperienceHeader);
 	   container.appendChild(femaleId);
@@ -437,7 +497,7 @@ function setClick () {
 		//得到点赞输出数字的操作对象
 		var spanNum = user_msg_sended.getElementsByTagName('span'); 
 		var spanLen = spanNum.length;
-		for (var m = 0; m < spanLen; m++) {
+		for (var mk_num = 0; mk_num < spanLen; mk_num++) {
 			(function(q) {
 				fllow[q].onclick = function() {
 						$.ajax({
@@ -456,7 +516,7 @@ function setClick () {
 						}
 					});
 					}			
-			})(m)
+			})(mk_num)
 		}
 		//设置评论功能区的功能
 		var discussLen = discuss.length;
@@ -469,9 +529,9 @@ function setClick () {
 		discussSedbtn.className='btn btn-default'
 		container.appendChild(discussArea);
 		discussSedbtn.innerHTML='发送';
-		discussSedbtn.style.cssText="position: absolute;left: 910px;bottom:10px ;font-family: 微软雅黑; vertical-align: middle;";
+		discussSedbtn.style.cssText="position: absolute;left: 910px;bottom:10px ;font-family: 微软雅黑; vertical-align: middle;background-color: #000000;color: white;";
 		disscussInput.style.cssText="width: 800px;height: 50px;position: absolute;left: 95px;bottom: 10px;resize: none;";
-		discussArea.style.cssText = "width:990px;height:0px;position:absolute;top:146px;left:5px;;background-color:white; transition: all 0.1s ease;overflow: hidden;"
+		discussArea.style.cssText = "width:990px;height:0px;position:absolute;top:146px;left:5px;;background-color:white; transition: all 0.05s ease;overflow: hidden;"
 		var discussAreaDivs = [];
 		for (var i = 0; i < divs.length; i++) {
 			if (divs[i].offsetWidth == 990) {
@@ -500,29 +560,100 @@ function setClick () {
 			
 		}
 		
-		//点击评论按钮
+        //点击评论按钮
+        var array_num=[];
 		for (var n = 0; n < discussLen; n++) {
+			//添加一个数组
+			array_num.push(0);
 			(function(discussNum) {
 				discuss[discussNum].onclick = function() {
-				discussAreaDivs[discussNum].style.height = 90 + 'px';
+					if (!localStorage.user_name) {
+					alert("请先登录，亲！");
+					}else{
+				var a_data;
+				array_num[discussNum]++;
+				function show_data () {
+				//模拟数据
+				var array_data=[{id:"huangweidong",info:"这是什么玩意儿啊"}
+				,{id:"huangtao",info:"这是模拟的数据"}
+				,{id:"jinyoujiaoer",info:"wokanhaowoziji"}],len=array_data.length;
+				function show_discuss (a) {
+							var div_conent=document.createElement("div"),dd_info=document.createElement("dd");
+							 div_conent.style.cssText="width: 900px;height: 80px;background-color: red;margin: 10px auto;";
+							 dd_info.style.cssText="margin-left: 20px;background-color: white;color: black;display:inline-block";
+							 discussAreaDivs[discussNum].appendChild(div_conent);
+							 div_conent.appendChild(dd_info);
+							 dd_info.innerHTML=a;
+							 a_data=discussAreaDivs[discussNum].style.height=120+90*len+"px";
+							 A_param.c=len;
+				}
+				for(var i =0;i<len;i++){
+					show_discuss(array_data[i].info)
+				}
+				//初始化
+		        for (var m_num=0;m_num<n;m_num++) {
+	                   	  if(m_num!==discussNum){
+	                   	  array_num[m_num]=0;
+	                   	  remove_data (m_num);
+	                   	  }
+					      }
+				}
+				function remove_data (a_num) {
+					var a=discussAreaDivs[a_num].getElementsByTagName("div").length;
+					for (var i =0;i<a;i++) {
+						discussAreaDivs[a_num].removeChild(discussAreaDivs[a_num].childNodes[discussAreaDivs[a_num].childNodes.length-1]);
+					}
+				}
+				
+				if(1===array_num[discussNum]%2){
+					show_data();
+				}else{
+					remove_data(discussNum);
+				}
 				
 				for (var i = 0; i < discussAreaDivs.length; i++) {
 						if (i != discussNum) {
 							discussAreaDivs[i].style.height = 0 + 'px';
 							discussInputsarray[i].value='';
 						}
-					}
-				//点击不同评论区的评论，呈现不同动画
+					}				
+				//点击不同评论区的评论按钮
 					for (var j = 0; j < arraydiv.length; j++) {
 						if (j > discussNum) {
-							arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 90 + 'px';
-						} else if (j == discussNum) {
+							if(discussAreaDivs[discussNum].offsetHeight>=120){
+							arraydiv[j].style.top = 20 * (j +1) + arraydiv[0].offsetHeight * j + 'px';
+							}else{
+							arraydiv[j].style.top =20 * (j + 1) + arraydiv[0].offsetHeight * j +120+A_param.c*90+ 'px';
+							}	
+						} else if (j === discussNum) {
 							arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 'px';
+							discussAreaDivs[discussNum].style.height=discussAreaDivs[discussNum].offsetHeight===0?a_data+A_param+"px":0+"px";
+							setHeight(discussAreaDivs[discussNum].style.height);
+							//send comment
+							discussAreaDivs[discussNum].getElementsByTagName("button")[0].onclick=function(){
+							var div_conent=document.createElement("div"),dd_info=document.createElement("dd");
+							 div_conent.style.cssText="width: 900px;height: 80px;background-color: red;margin: 10px auto;";
+							 dd_info.style.cssText="margin-left: 20px;background-color: green;display: inline-block;"
+							 discussAreaDivs[discussNum].appendChild(div_conent);
+							 div_conent.appendChild(dd_info);
+							 dd_info.innerHTML="huangweidong";
+							 //height degrese
+							 var a_num=discussAreaDivs[discussNum].getElementsByTagName("div").length;
+							  discussAreaDivs[discussNum].style.height=120+90*a_num+"px";
+							  A_param.b=120+90*a_num+"px";
+						     for(var j_num=0;j_num<arraydiv.length;j_num++){
+						     	if(j_num>discussNum){
+						     		arraydiv[j_num].style.top= 20 * (j_num + 1) + arraydiv[0].offsetHeight * j_num + 120+90*a_num+ 'px';
+						     	}
+						     }
+							setHeight (discussAreaDivs[discussNum].style.height);
+							}
 						} else if(j<discussNum){
                             arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j  + 'px';
 						}
 					}
 				}
+					}
 			})(n);
 		}
 		//点击发送按钮时所有评论区关闭
@@ -530,8 +661,14 @@ function setClick () {
 			discussAreaDivs[a].style.height = 0 + 'px';
 		}
 		//点击按钮用户所发送信息的呈现区域height就增加
-		user_msg_sended.style.height = 20 * (arraydiv.length+1)+ arraydiv.length * 146 +200+ 'px';
-		console.log(arraydiv.length,arraydiv.length);
+	    function setHeight (h_num) {
+	    	if(!arguments[0]){
+	    		user_msg_sended.style.height = 20 * (arraydiv.length+1)+ arraydiv.length * 146 +200+ 'px';
+	    	}else{
+	    		user_msg_sended.style.height = 20 * (arraydiv.length+1)+ arraydiv.length * 146 +200+parseInt(h_num)+'px';
+	    	}
+	    }
+		setHeight ();
 		for (var j = 0; j < arraydiv.length; j++) {
 			arraydiv[j].style.top = 20 * (j + 1) + arraydiv[0].offsetHeight * j + 'px';
 		}
@@ -549,14 +686,14 @@ if (document.addEventListener) {
 	sed_button_1.onclick = setClick;
 }
     //查看更多
-    document.body.onmousewheel=function(e){
+    window.onscroll=function(){
     	var scrolltop=document.body.scrollTop+document.documentElement.scrollTop;
-    	if (scrolltop>3000&&localStorage.user_name) {
+    	if (scrolltop>=3000&&localStorage.user_name) {
     		document.getElementById("downloaddata").style.opacity=1;
-    		if(e.wheelDeltaY>0){
-    			document.getElementById("downloaddata").style.opacity=0;
-    		}
     	}
+    	if(scrolltop<3000){
+    		document.getElementById("downloaddata").style.opacity=0;
+    		}
     }
 }
 
@@ -573,7 +710,6 @@ function set_write_msg() {
 	var num_count = document.getElementById('num');
 	var str_length = 0;
 	var sed_Button = document.getElementById('sed_button');
-	sed_Button.style.zIndex = -1;
 	num_count.innerHTML = "还能输入"+ parseInt(200 - str_length) +"个字符";
 	//当鼠标聚焦在textarea时
 	 function user_write_msg() {
@@ -581,22 +717,25 @@ function set_write_msg() {
 		//获取要操作的提交按钮所处于的div对象
 		var sed_Message = document.getElementById('sed_message');
 		//keyup change the bgcolor
-		sed_Message.style.backgroundColor = "#c0efd1";
+		function setStyle (a,b,c) {
+		sed_Button.style.display=a;
+		sed_Button.className=b
+		sed_Message.style.display=c;
+		}
+		setStyle ("inline","btn btn-success","none");
 		var str_length = get_length(this.value);
 		num_count.innerHTML = "还能输入"+ parseInt(200 - str_length)+"个字符";
 		if (str_length == 0) {
-			sed_Message.style.backgroundColor = "#eceeee";
-			sed_Button.style.zIndex = -1;
+			setStyle ("none","btn btn-default","inline-block");
 		} else if (str_length > 200) {
 			num_count.innerHTML = "超出"+  parseInt(str_length-200) +"个字符";
-			sed_Button.style.zIndex = -1;
-			sed_Message.style.backgroundColor="#e2e1ae";
+			setStyle ("none","btn btn-default","inline-block");
 		} else {
-			sed_Button.style.zIndex = 1;
+			setStyle ("inline","btn btn-success","none");
 		}
 	}
 		if(document.addEventListener){
-		owrite_msg.addEventListener("keyup",user_write_msg);
+		owrite_msg.addEventListener("keyup",user_write_msg,false);
 	}else if(document.attachEvent){
 		owrite_msg.attachEvent("onkeyup",user_write_msg);
 	}else{
@@ -628,13 +767,14 @@ function set_sig_reg() {
 				set_bg.style.zIndex = 999
 				set_bg.style.display= "block";
 				document.body.style.overflowY="hidden";
-				for (var i=0;i<array_element.length;i++) {
-			   array_element[i].style.filter="blur(5px)";
+				if(navigator.userAgent.indexOf("Edge")<0){
+							for (var i=0;i<array_element.length;i++) {
+			    array_element[i].style.filter="blur(5px)";
 				array_element[i].style.webkitFilter="blur(5px)";
 				array_element[i].style.mozFilter="blur(5px)";
 				array_element[i].style.msFilter="blur(5px)";
 			}
-
+				}
 				body.onmousewheel = function() {
 					return false;
 				}
@@ -653,6 +793,7 @@ function set_sig_reg() {
 			signin_box.style.opacity = 0;
 			set_bg.style.opacity = 0;
             for (var i=0;i<array_element.length;i++) {
+            	
 					array_element[i].style.filter="blur(0px)";
 					array_element[i].style.webkitFilter="blur(0px)";
 					array_element[i].style.mozFilter="blur(0px)";
@@ -675,26 +816,6 @@ function set_sig_reg() {
 	}
 	//注册
 	function setreg () {
-		//check number
-			var img_checknumber=document.getElementById("checknumber").getElementsByTagName("img")[0];
-		function  refresh_check_number(){
-			$.ajax({
-				type:"get",
-				url:"php/checknumber.php",
-				async:true,
-				success:function(){
-					 img_checknumber.src="php/checknumber.php";//ie bug?
-				}
-			});
-	   
-		}
-		if(document.addEventListener){
-			img_checknumber.addEventListener("click",refresh_check_number,false);
-		}else if(document.attachEvent){
-			img_checknumber.attachEvent("onclick",refresh_check_number);
-		}else{
-			img_checknumber.onclick=refresh_check_number;
-		}
 	function getval () {
 		
 		//密码
@@ -755,7 +876,7 @@ function set_sig_reg() {
 				url:"php/checknumber.php",
 				async:true
 			});
-			img_checknumber.src="php/checknumber.php";
+			img_checknumber.src="php/checknumber.php"+'?'+Math.random();
 		};
 					refresh_checknumber();
 				var num=parseInt(data);
@@ -851,7 +972,7 @@ function set_sig_reg() {
 				type_name.value="";
 				document.getElementById("in_checknumber").value="";
 				if(status==="success"){
-					window.location.href="reg.html";
+					window.location.href="/social_job/reg/";
 				}
 			}
 		});					 					
@@ -996,12 +1117,8 @@ function disabled_wheel() {
 	window.onmousewheel = document.onmousewheel = scrollFunc; 
 };
 window.onload = function() {
-	//用户提交信息呈现
-	sed_personal_div()
-	//***
+	sed_personal_div();
 	disabled_wheel();
-	//设置信息区域的功能
 	set_write_msg();
-	//登陆提交
-	set_sig_reg()
+	set_sig_reg();
 }

@@ -1,12 +1,51 @@
 body{
 	background-color: #F6F9F9;
+    margin:0 auto ;
+}
+#banner{
+	width: 100%;
+	height: 60px;
+	background-color: #22f5ee;
+	position: absolute;
+	top: 0px;
+}
+#banner_ul{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 600px;
+  height:60px ;
+}
+#liebiao{
+	list-style: none;
+}
+#liebiao li{
+	float: left;
+	margin: 2px 30px;
+}
+#liebiao li:nth-child(1){
+	float: left;
+	margin: -2px 30px;
+}
+#liebiao li a{
+	text-decoration: none;
 }
 .regbox{
 	width: 800px;
 	height: 400px;
+	line-height: 400px;
 	background-color:#22F5EE;
-	position: absolute;
-	left: calc(50% - 400px);
-	top: calc(50% - 250px);
+	margin: 0 auto;
 	border-radius: 10px;
+	text-align:center;
+	margin-top: 100px;
+}
+.regbox>span:nth-child(1){
+	font-size: 16px;
+	font-family: "微软雅黑";
+}
+.regbox>span:nth-child(2){
+	font-family: "微软雅黑";
+	color: red;
+	font-size: 18px;
 }

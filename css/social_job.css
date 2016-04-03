@@ -1,11 +1,8 @@
-html{
-	margin: 0 auto;
-}
 body{
 	margin: 0 auto;
 	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
 }
-
 #banner{
 	width: 100%;
 	height: 60px;
@@ -13,22 +10,25 @@ body{
 	position: absolute;
 	top: 0px;
 }
-
-#btn_siginout{
+.btn_siginout{
+	top: 12.3px;
 	position: absolute;
-	left:210%;
+	right:2%;
 	cursor: pointer;
 	display: none;
 	color: white;
 	font-family: "微软雅黑";
 	background-color: black;
+	padding: 7px 12px;
+	border-style: none;
+	border-radius: 4px;
 }
 #book_png_1{
 	width: 80px;
 	height: 40px;
 	position: absolute;
 	top: 10px;
-	left:205%;
+	right:2%;
 	background-color: black;
 	color: white;
 	font-family: "微软雅黑";
@@ -59,7 +59,6 @@ body{
 #liebiao li{
 	float: left;
 	margin: auto 30px;
-	l
 }
 
 #liebiao:last-child{
@@ -69,7 +68,6 @@ body{
 
 #liebiao li a{
 	text-decoration: none;
-	color: white;
 }
 #unload{
 	width: 1100px;
@@ -109,12 +107,12 @@ body{
 
 #fileInputContainer{
         height:28px;
-        background:url(../img/添加图片投票.png)no-repeat;
+        background:url(../img/addPhoto.png)no-repeat;
         position:absolute;
         left: 850px;
         top: 150px;
         width: 34px;
-         cursor: pointer;
+        cursor: pointer;
     }
     #fileInput{
     	display: none;
@@ -141,7 +139,7 @@ body{
 
 #user-sended-msg{
 	width: 1100px;
-	height: 366px;
+	height: auto;
 	background-color: #eceeee;
 	position: relative;
 	top: 120px;
@@ -152,15 +150,21 @@ body{
 
 #personal_img{
 /*	background: url(../img/touxiang1.jpeg);*/
+    position: absolute;
 	width: 120px;
 	height: 120px;
 	border-radius: 100%;
 	background-color: white;
-	position: absolute;
 	left: 40px;
-	top:40px ;
+	top:35px ;
 }
-
+.change_info{
+	position: absolute;
+	left: 200px;
+	top:150px ;
+	border-style:none;
+	color: white;
+}
 #write_msg{
 	resize: none;
 	width: 770px;
@@ -171,24 +175,27 @@ body{
 }
 
 #sed_message{
-	background: url(../img/发送.png);
-	width: 34px;
-	height: 29px;
+	width: 55px;
+	height: 35px;
+	border-radius: 4px;
+	background-color:whitesmoke;
 	position: absolute;
-	border-radius: 20%;
-	left: 930px;
+	left: 918px;
 	top: 150px;
+	cursor: default;
+	padding:8px 13.5px;
+	font-family: "微软雅黑";
+	-moz-user-select: none;
+	-webkit-user-select: none;
 }
 
 #sed_button{
-	    height:29px;
-	    width: 34px;
         position:absolute;
-        right:0;
-        top:0;
-        opacity: 0;
-        filter:alpha(opacity=0);
-        cursor:pointer;
+        left: 918px;
+	    top: 150px;
+        display: none;
+        font-family: "微软雅黑";
+        border-style: none;
 }
 
 #count{
@@ -408,7 +415,7 @@ body{
 #downloaddata{
 position: absolute;
 left:20%;
-bottom: 100px;
+bottom: 30px;
 width: 60%;
 background-color: #22F5EE;
 color: white;
@@ -418,3 +425,4 @@ box-shadow: 0 0 6px lightblue;
 opacity: 0;
 transition: all 0.25s ease-in;
 }
+

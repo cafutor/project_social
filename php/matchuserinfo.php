@@ -43,7 +43,7 @@ for($i=0;$i<$num;$i++){
 		$match_num=1;
 		$_SESSION['useremail']=$array_email[$i];
 		$_SESSION['userpassword']=$array_password[$i];
-		$sql_select_user_head_photo="SELECT user_head_photo,userexpirence,username FROM  ".$array_result[$i]." WHERE user_active_status=1";
+		$sql_select_user_head_photo="SELECT user_head_photo,userexpirence,username,user_sex FROM  ".$array_result[$i]." WHERE user_active_status=1";
 		for($l=0;$l<mysqli_num_fields(mysqli_query($con,$sql_select_user_head_photo));$l++){
 			 array_push($userinfo,mysqli_fetch_row(mysqli_query($con,$sql_select_user_head_photo))[$l]);
 		}
