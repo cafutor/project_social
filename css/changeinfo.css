@@ -190,7 +190,6 @@ body{
 }
 .change_success{
 	width: 300px;
-	height: 100px;
 	background-color: rgba(0,0,0,0);
 	color: white;
 	font-family: "微软雅黑";
@@ -202,35 +201,21 @@ body{
 	transition: all 0.2s ease-in-out;
 	border-radius: 5px;
 }
-.test-contain{
-	position: relative;
-	display: inline-block;
-    left: 500px;
-    top: -500px;
-    line-height: 20px;
-    color: white;
-    background-color: rgba(0,0,0,0.8);
-    padding: 5px 20px;
-    border-radius: 30px;
-    
+.table-area{
+	margin-top: -100px;
 }
 .table-change-border{
-	/*display: inline-block;*/
-	border-collapse: collapse;
-	margin-bottom: 20px;
-	border-top:solid 1px red;
+	display: inline-block;
+	margin-top: 20px;
+	border-top:solid 1px #888888;
 	width: 100%;
-	border-bottom:solid 1px red;
-	padding: 20px 0;
-	
+	border-bottom:solid 1px #888888;
+	padding: 10px 0px 20px 0px;
 }
 .table-change-border th,td{
-	border-style: none;
+	border: solid 1px #888888;
 	text-align: center;
 	padding: 10px 5px;
-}
-.table-change-border tr:nth-child(2)>td:nth-child(1){
-	word-break: break-all;
 }
 .table-change-border td{
 	width: 7%;
@@ -246,7 +231,6 @@ body{
 	
 }
 .sel option{
-	
 	display: inline-block;
 	border: solid 3px red;
 }
@@ -254,6 +238,11 @@ body{
 	display: inline-block;
 	margin: 0 auto;
 }
-
-
+.sanjiao{
+background-color: red;
+display: inline-block;
+padding: 3px 10px;
+color: white;
+border-radius: 4px;
+}
 

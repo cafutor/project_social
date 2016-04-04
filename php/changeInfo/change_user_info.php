@@ -1,15 +1,15 @@
 <?php 
-class handle{
-	public function getValue()
-	{
-		return $_POST;
-	}
-	
-	
-}	
-$newHandle=new handle();
+//class handle{
+//	public function getValue()
+//	{
+//		return $_GET['name'];
+//	}
+//	
+//	
+//}	
+//$newHandle=new handle();
 
-echo "success";
+print_r($_POST);
 
 
 
